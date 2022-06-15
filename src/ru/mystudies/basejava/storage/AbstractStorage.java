@@ -3,7 +3,6 @@ package ru.mystudies.basejava.storage;
 import ru.mystudies.basejava.exception.ExistStorageException;
 import ru.mystudies.basejava.exception.NotExistStorageException;
 import ru.mystudies.basejava.model.Resume;
-import ru.mystudies.basejava.storage.serializer.StreamSerializer;
 
 import java.io.IOException;
 import java.util.Comparator;
