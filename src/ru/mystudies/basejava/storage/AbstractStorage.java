@@ -3,6 +3,7 @@ package ru.mystudies.basejava.storage;
 import ru.mystudies.basejava.exception.ExistStorageException;
 import ru.mystudies.basejava.exception.NotExistStorageException;
 import ru.mystudies.basejava.model.Resume;
+import ru.mystudies.basejava.storage.serializer.StreamSerializer;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -14,11 +15,6 @@ public abstract class AbstractStorage<SK> implements Storage {
     protected static final Comparator<Resume> RESUME_COMPARATOR =
             Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
-    private WorkToFiles workToFiles;
-
-    public void setWorkToFiles(WorkToFiles workToFiles) {
-        this.workToFiles = workToFiles;
-    }
 
     protected abstract void doUpdate(Resume resume, SK searchKey);
 

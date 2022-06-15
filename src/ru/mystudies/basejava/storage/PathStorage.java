@@ -2,6 +2,7 @@ package ru.mystudies.basejava.storage;
 
 import ru.mystudies.basejava.exception.StorageException;
 import ru.mystudies.basejava.model.Resume;
+import ru.mystudies.basejava.storage.serializer.StreamSerializer;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -12,26 +13,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> implements WorkToFiles {
+public class PathStorage extends AbstractStorage<Path> {
 
     private final Path directory;
+    private StreamSerializer streamSerializer;
 
-    protected AbstractPathStorage(String dir) {
+    public PathStorage(String dir, StreamSerializer streamSerializer) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
+        this.streamSerializer = streamSerializer;
     }
-
-    abstract public void doWrite(Resume resume, OutputStream os);
-
-    abstract public Resume doRead(InputStream is);
 
     @Override
     protected void doUpdate(Resume resume, Path Path) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(Path.toFile())));
+            streamSerializer.doWrite(resume, new BufferedOutputStream(new FileOutputStream(Path.toFile())));
         } catch (Exception e) {
             throw new StorageException("Error - Path not written " + resume.getUuid(), e.getMessage());
         }
@@ -41,19 +40,15 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> implemen
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            doUpdate(resume, path);
         } catch (IOException e) {
             throw new StorageException("Couldn't create Path " + path, e.getMessage());
         }
+        doUpdate(resume, path);
     }
 
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
-        }
+        dirExist().forEach(this::doDelete);
     }
 
     @Override
@@ -67,13 +62,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> implemen
 
     @Override
     public int size() {
-        List<Path> list;
-        try {
-            list = Files.list(directory).collect(Collectors.toList());
-        } catch (IOException e) {
-            throw new StorageException("Error - directory id empty ", directory.toString());
-        }
-        return list.size();
+        return dirExist().size();
     }
 
     @Override
@@ -84,23 +73,16 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> implemen
     @Override
     public List<Resume> doCopyAll() {
         List<Resume> resumes = new ArrayList<>();
-        try {
-            List<Path> list = Files.list(directory).collect(Collectors.toList());
-            if (list != null) {
-                for (Path path : list) {
-                    resumes.add(doGet(path));
-                }
-            }
-            return resumes;
-        } catch (IOException e) {
-            throw new StorageException("Error - Path is not read", directory.toString(), e);
+        for (Path path : dirExist()) {
+            resumes.add(doGet(path));
         }
+        return resumes;
     }
 
     @Override
     protected Resume doGet(Path path) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(path.toFile())));
+            return streamSerializer.doRead(new BufferedInputStream(new FileInputStream(path.toFile())));
         } catch (Exception e) {
             throw new StorageException("Error - Path not read " + path, e.getMessage());
         }
@@ -109,5 +91,17 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> implemen
     @Override
     protected boolean isExist(Path path) {
         return Files.exists(path);
+    }
+
+    private List<Path> dirExist() {
+        List<Path> list = null;
+        try {
+            list = Files.list(directory).collect(Collectors.toList());
+            if (list != null) {
+                return list;
+            }
+        } catch (IOException e) {
+        }
+        throw new StorageException("Error - Path is not read", directory.toString());
     }
 }
