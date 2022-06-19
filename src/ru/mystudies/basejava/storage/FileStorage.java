@@ -7,21 +7,25 @@ import ru.mystudies.basejava.storage.serializer.StreamSerializer;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
 
     private final File directory;
     private StreamSerializer streamSerializer;
 
-    public FileStorage(File directory, StreamSerializer streamSerializer) {
+    public FileStorage(File dir, StreamSerializer streamSerializer) {
+        Objects.requireNonNull(dir, "directory must not be null");
+
+        this.directory = dir;
+        this.streamSerializer = streamSerializer;
         if (!directory.canRead()) {
             throw new IllegalArgumentException("File " + directory.getName() + " cannot be read");
         }
         if (!directory.canWrite()) {
             throw new IllegalArgumentException("File " + directory.getName() + " cannot be write");
         }
-        this.directory = directory;
-        this.streamSerializer = streamSerializer;
+
     }
 
     @Override
