@@ -35,7 +35,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             streamSerializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (Exception e) {
-            throw new StorageException("Error - Path not written " + resume.getUuid(), e.getMessage());
+            throw new StorageException("Error - Path not written " + resume.getUuid(), e);
         }
     }
 

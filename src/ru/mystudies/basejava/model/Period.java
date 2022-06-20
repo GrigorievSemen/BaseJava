@@ -1,15 +1,25 @@
 package ru.mystudies.basejava.model;
 
+import ru.mystudies.basejava.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Period implements Serializable {
     private static final long serialVersionUID = 1L;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate start;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate end;
+    private String description;
 
-    private final LocalDate start;
-    private final LocalDate end;
-    private final String description;
+    public Period() {
+    }
 
     public Period(LocalDate start, LocalDate end, String description) {
         this.description = description;

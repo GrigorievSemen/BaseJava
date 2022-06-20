@@ -153,7 +153,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertGet(new Resume(UUID_1, FULL_NAME_1));
+        assertGet(RESUME_1);
+        assertGet(RESUME_2);
+        assertGet(RESUME_3);
     }
 
     @Test
@@ -198,7 +200,7 @@ public abstract class AbstractStorageTest {
     }
 
     public void assertGet(Resume resume) {
-        Assertions.assertEquals(resume, storage.get(resume.getUuid()));
+      assertEquals(resume, storage.get(resume.getUuid()));
     }
 
     public List<Resume> sortedArray(List<Resume> resumes) {
