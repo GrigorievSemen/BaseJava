@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.mystudies.basejava.ResumeTestData;
 import ru.mystudies.basejava.exception.ExistStorageException;
 import ru.mystudies.basejava.exception.NotExistStorageException;
 import ru.mystudies.basejava.model.*;
@@ -30,79 +29,85 @@ public abstract class AbstractStorageTest {
     private static final String FULL_NAME_2 = "Иванов Иван Иванович";
     private static final String FULL_NAME_3 = "Сидоров Сергей Сергеевич";
     private static final String UUID_NOT_EXIST = "dummy";
-    private static final Resume RESUME_1 = ResumeTestData.createAndReturnResume(UUID_1, FULL_NAME_1);
-    private static final Resume RESUME_2 = ResumeTestData.createAndReturnResume(UUID_2, FULL_NAME_2);
-    private static final Resume RESUME_3 = ResumeTestData.createAndReturnResume(UUID_3, FULL_NAME_3);
+    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
 
     static {
-        ResumeTestData.addContact(RESUME_1, ContactType.NUMBER_PHONE, "1111111111");
-        ResumeTestData.addContact(RESUME_1, ContactType.SKYPE, "qwerty1");
-        ResumeTestData.addContact(RESUME_1, ContactType.EMAIL, "mail1");
-        ResumeTestData.addContact(RESUME_1, ContactType.PROFILE_LINKEDIN, "LinkedIn1");
-        ResumeTestData.addContact(RESUME_1, ContactType.PROFILE_GITHUB, "GitHub1");
-        ResumeTestData.addContact(RESUME_1, ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow1");
-        ResumeTestData.addContact(RESUME_1, ContactType.HOME_PAGE, "Home1");
+        RESUME_1.addContact(ContactType.NUMBER_PHONE, "1111111111");
+        RESUME_1.addContact(ContactType.SKYPE, "qwerty1");
+        RESUME_1.addContact(ContactType.EMAIL, "mail1");
+        RESUME_1.addContact(ContactType.PROFILE_LINKEDIN, "LinkedIn1");
+        RESUME_1.addContact(ContactType.PROFILE_GITHUB, "GitHub1");
+        RESUME_1.addContact(ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow1");
+        RESUME_1.addContact(ContactType.HOME_PAGE, "Home1");
 
-        ResumeTestData.addObjectiveOrPersonal(RESUME_1, SectionType.OBJECTIVE, "Good1");
-        ResumeTestData.addObjectiveOrPersonal(RESUME_1, SectionType.PERSONAL, "Good boy1");
+        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective_1"));
+        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Personal_1"));
 
-        ResumeTestData.addAchieveOrQualifications(RESUME_1, SectionType.ACHIEVEMENT, "Achieve_1", "Achieve_1");
-        ResumeTestData.addAchieveOrQualifications(RESUME_1, SectionType.QUALIFICATIONS, "Qualifications_1", "Qualifications_1");
+        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_1", "Achieve_1"));
+        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_1", "Qualifications_1"));
 
-        ResumeTestData.addExperienceOrEducation(RESUME_1, SectionType.EXPERIENCE,
-                new Organization("Number_1", "Web_1",
-                        new Period(DateUtil.of(2001, Month.SEPTEMBER), DateUtil.of(2002, Month.SEPTEMBER), "description_1")));
+        RESUME_1.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Number_1", "Web_1",
+                                new Period(DateUtil.of(2001, Month.SEPTEMBER), DateUtil.of(2002, Month.SEPTEMBER), "description_1"))));
 
-        ResumeTestData.addExperienceOrEducation(RESUME_1, SectionType.EDUCATION,
-                new Organization("Number_1", "",
-                        new Period(DateUtil.of(1990, Month.MAY), DateUtil.of(1992, Month.MAY), "Education_1"),
-                        new Period(DateUtil.of(2005, Month.FEBRUARY), DateUtil.of(2008, Month.FEBRUARY), "Education_2")));
+        RESUME_1.addSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("Number_1", "",
+                                new Period(DateUtil.of(1990, Month.MAY), DateUtil.of(1992, Month.MAY), "Education_1"),
+                                new Period(DateUtil.of(2005, Month.FEBRUARY), DateUtil.of(2008, Month.FEBRUARY), "Education_2"))));
 
-        ResumeTestData.addContact(RESUME_2, ContactType.NUMBER_PHONE, "2222222222");
-        ResumeTestData.addContact(RESUME_2, ContactType.SKYPE, "qwerty2");
-        ResumeTestData.addContact(RESUME_2, ContactType.EMAIL, "mail2");
-        ResumeTestData.addContact(RESUME_2, ContactType.PROFILE_LINKEDIN, "LinkedIn2");
-        ResumeTestData.addContact(RESUME_2, ContactType.PROFILE_GITHUB, "GitHub2");
-        ResumeTestData.addContact(RESUME_2, ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow2");
-        ResumeTestData.addContact(RESUME_2, ContactType.HOME_PAGE, "Home2");
+        RESUME_2.addContact(ContactType.NUMBER_PHONE, "2222222222");
+        RESUME_2.addContact(ContactType.SKYPE, "qwerty2");
+        RESUME_2.addContact(ContactType.EMAIL, "mail2");
+        RESUME_2.addContact(ContactType.PROFILE_LINKEDIN, "LinkedIn2");
+        RESUME_2.addContact(ContactType.PROFILE_GITHUB, "GitHub2");
+        RESUME_2.addContact(ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow2");
+        RESUME_2.addContact(ContactType.HOME_PAGE, "Home2");
 
-        ResumeTestData.addObjectiveOrPersonal(RESUME_2, SectionType.OBJECTIVE, "Good2");
-        ResumeTestData.addObjectiveOrPersonal(RESUME_2, SectionType.PERSONAL, "Good boy2");
+        RESUME_2.addSection(SectionType.OBJECTIVE, new TextSection("Objective_2"));
+        RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Personal_2"));
 
-        ResumeTestData.addAchieveOrQualifications(RESUME_2, SectionType.ACHIEVEMENT, "Achieve_2", "Achieve_2");
-        ResumeTestData.addAchieveOrQualifications(RESUME_2, SectionType.QUALIFICATIONS, "Qualifications_2", "Qualifications_2");
+        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_2", "Achieve_2"));
+        RESUME_2.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_2", "Qualifications_2"));
 
-        ResumeTestData.addExperienceOrEducation(RESUME_2, SectionType.EXPERIENCE,
-                new Organization("Number_2", "Web_2",
-                        new Period(DateUtil.of(2010, Month.SEPTEMBER), DateUtil.of(2012, Month.SEPTEMBER), "description_1")));
+        RESUME_2.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Number_2", "Web_2",
+                                new Period(DateUtil.of(2010, Month.SEPTEMBER), DateUtil.of(2012, Month.SEPTEMBER), "description_1"))));
 
-        ResumeTestData.addExperienceOrEducation(RESUME_2, SectionType.EDUCATION,
-                new Organization("Number_2", "",
-                        new Period(DateUtil.of(1991, Month.MAY), DateUtil.of(1995, Month.MAY), "Education_1"),
-                        new Period(DateUtil.of(2010, Month.FEBRUARY), DateUtil.of(2011, Month.FEBRUARY), "Education_2")));
+        RESUME_2.addSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("Number_2", "",
+                                new Period(DateUtil.of(1991, Month.MAY), DateUtil.of(1995, Month.MAY), "Education_1"),
+                                new Period(DateUtil.of(2010, Month.FEBRUARY), DateUtil.of(2011, Month.FEBRUARY), "Education_2"))));
 
-        ResumeTestData.addContact(RESUME_3, ContactType.NUMBER_PHONE, "3333333333");
-        ResumeTestData.addContact(RESUME_3, ContactType.SKYPE, "qwerty3");
-        ResumeTestData.addContact(RESUME_3, ContactType.EMAIL, "mail3");
-        ResumeTestData.addContact(RESUME_3, ContactType.PROFILE_LINKEDIN, "LinkedIn3");
-        ResumeTestData.addContact(RESUME_3, ContactType.PROFILE_GITHUB, "GitHub3");
-        ResumeTestData.addContact(RESUME_3, ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow3");
-        ResumeTestData.addContact(RESUME_3, ContactType.HOME_PAGE, "Home3");
+        RESUME_3.addContact(ContactType.NUMBER_PHONE, "3333333333");
+        RESUME_3.addContact(ContactType.SKYPE, "qwerty3");
+        RESUME_3.addContact(ContactType.EMAIL, "mail3");
+        RESUME_3.addContact(ContactType.PROFILE_LINKEDIN, "LinkedIn3");
+        RESUME_3.addContact(ContactType.PROFILE_GITHUB, "GitHub3");
+        RESUME_3.addContact(ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow3");
+        RESUME_3.addContact(ContactType.HOME_PAGE, "Home3");
 
-        ResumeTestData.addObjectiveOrPersonal(RESUME_3, SectionType.OBJECTIVE, "Good3");
-        ResumeTestData.addObjectiveOrPersonal(RESUME_3, SectionType.PERSONAL, "Good boy3");
+        RESUME_3.addSection(SectionType.OBJECTIVE, new TextSection("Objective_3"));
+        RESUME_3.addSection(SectionType.PERSONAL, new TextSection("Personal_3"));
 
-        ResumeTestData.addAchieveOrQualifications(RESUME_3, SectionType.ACHIEVEMENT, "Achieve_3", "Achieve_3");
-        ResumeTestData.addAchieveOrQualifications(RESUME_3, SectionType.QUALIFICATIONS, "Qualifications_3", "Qualifications_3");
+        RESUME_3.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_3", "Achieve_3"));
+        RESUME_3.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_3", "Qualifications_3"));
 
-        ResumeTestData.addExperienceOrEducation(RESUME_3, SectionType.EXPERIENCE,
-                new Organization("Number_3", "Web_3",
-                        new Period(DateUtil.of(2015, Month.SEPTEMBER), DateUtil.of(2016, Month.SEPTEMBER), "description_1")));
+        RESUME_3.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Number_3", "Web_3",
+                                new Period(DateUtil.of(2015, Month.SEPTEMBER), DateUtil.of(2016, Month.SEPTEMBER), "description_1"))));
 
-        ResumeTestData.addExperienceOrEducation(RESUME_3, SectionType.EDUCATION,
-                new Organization("Number_3", "",
-                        new Period(DateUtil.of(1998, Month.MAY), DateUtil.of(1999, Month.MAY), "Education_1"),
-                        new Period(DateUtil.of(2007, Month.FEBRUARY), DateUtil.of(2008, Month.FEBRUARY), "Education_2")));
+        RESUME_3.addSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("Number_3", "",
+                                new Period(DateUtil.of(1998, Month.MAY), DateUtil.of(1999, Month.MAY), "Education_1"),
+                                new Period(DateUtil.of(2007, Month.FEBRUARY), DateUtil.of(2008, Month.FEBRUARY), "Education_2"))));
     }
 
     final private Storage storage;
@@ -200,7 +205,7 @@ public abstract class AbstractStorageTest {
     }
 
     public void assertGet(Resume resume) {
-      assertEquals(resume, storage.get(resume.getUuid()));
+        assertEquals(resume, storage.get(resume.getUuid()));
     }
 
     public List<Resume> sortedArray(List<Resume> resumes) {

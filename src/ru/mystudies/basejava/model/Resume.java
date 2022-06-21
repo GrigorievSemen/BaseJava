@@ -50,11 +50,11 @@ public class Resume implements Serializable {
         return section;
     }
 
-    public void setContacts(ContactType type, String field) {
+    public void addContact(ContactType type, String field) {
         contacts.put(type, field);
     }
 
-    public void setSection(SectionType type, AbstractSection abstractSection) {
+    public void addSection(SectionType type, AbstractSection abstractSection) {
         section.put(type, abstractSection);
     }
 
