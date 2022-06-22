@@ -1,11 +1,10 @@
 package ru.mystudies.basejava.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 public class OrganizationSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +20,10 @@ public class OrganizationSection extends AbstractSection {
     public OrganizationSection(List<Organization> organizations) {
         Objects.requireNonNull(organizations, "organizations must not be null");
         this.organizations = organizations;
+    }
+
+    public List<Organization> getOrganizations() {
+        return organizations;
     }
 
     @Override

@@ -85,8 +85,9 @@ public class Resume implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append(fullName).append("\n");
         contacts.forEach((key, value) -> sb.append(value).append("\n"));
-        section.forEach((key, value) -> sb.append(key.getTitle() + value).append("\n"));
+        section.forEach((key, value) -> sb.append(key.getTitle()).append(value).append("\n"));
         return sb.toString();
     }
 }

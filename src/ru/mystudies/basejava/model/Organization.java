@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -20,6 +21,24 @@ public class Organization implements Serializable {
         this.website = Objects.requireNonNull(website, "website must not be null");
         this.title = Objects.requireNonNull(title, "website must not be null");
         this.periods = List.of(periods);
+    }
+
+    public Organization(String title, String website, List<Period> periods) {
+        this.website = Objects.requireNonNull(website, "website must not be null");
+        this.title = Objects.requireNonNull(title, "website must not be null");
+        this.periods = periods;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
     }
 
     @Override

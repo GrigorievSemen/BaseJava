@@ -45,8 +45,8 @@ public abstract class AbstractStorageTest {
         RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective_1"));
         RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Personal_1"));
 
-        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_1", "Achieve_1"));
-        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_1", "Qualifications_1"));
+        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve1", "Achieve11"));
+        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_1", "Qualifications_11"));
 
         RESUME_1.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
@@ -70,8 +70,8 @@ public abstract class AbstractStorageTest {
         RESUME_2.addSection(SectionType.OBJECTIVE, new TextSection("Objective_2"));
         RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Personal_2"));
 
-        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_2", "Achieve_2"));
-        RESUME_2.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_2", "Qualifications_2"));
+        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_2", "Achieve_22"));
+        RESUME_2.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_2", "Qualifications_22"));
 
         RESUME_2.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
@@ -95,8 +95,8 @@ public abstract class AbstractStorageTest {
         RESUME_3.addSection(SectionType.OBJECTIVE, new TextSection("Objective_3"));
         RESUME_3.addSection(SectionType.PERSONAL, new TextSection("Personal_3"));
 
-        RESUME_3.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_3", "Achieve_3"));
-        RESUME_3.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_3", "Qualifications_3"));
+        RESUME_3.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve_3", "Achieve_33"));
+        RESUME_3.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_3", "Qualifications_33"));
 
         RESUME_3.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
@@ -186,11 +186,11 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void delete() throws IOException {
-        List<Resume> resumes = new ArrayList<>(Arrays.asList(RESUME_1, RESUME_2));
-        sortedArray(resumes);
-
-        storage.delete(UUID_3);
-        Assertions.assertArrayEquals(resumes.toArray(), storage.getAllSorted().toArray());
+        NotExistStorageException thrown = Assertions.assertThrows(NotExistStorageException.class, () -> {
+            storage.delete(UUID_3);
+            assertSize(2);
+            storage.get(UUID_3);
+        });
     }
 
     @Test

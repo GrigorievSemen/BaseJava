@@ -1,8 +1,7 @@
 package ru.mystudies.basejava.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
+
 public class TextSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
 
@@ -12,7 +11,11 @@ public class TextSection extends AbstractSection {
     }
 
     public TextSection(String record) {
-        this.record = record + "\n";
+        this.record = record;
+    }
+
+    public String getRecord() {
+        return record;
     }
 
     @Override
@@ -29,6 +32,6 @@ public class TextSection extends AbstractSection {
     }
 
     public String toString() {
-        return record;
+        return record + "\n";
     }
 }
