@@ -22,7 +22,7 @@ public class Period implements Serializable {
     }
 
     public Period(LocalDate start, LocalDate end, String description) {
-        this.description = description;
+        this.description = description == null ? "" : description;
         this.start = start;
         this.end = end;
     }

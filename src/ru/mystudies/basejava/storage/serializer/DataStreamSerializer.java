@@ -43,11 +43,11 @@ public class DataStreamSerializer implements StreamSerializer {
                     case EDUCATION:
                         writeWithException(((OrganizationSection) section).getOrganizations(), dos, organization -> {
                             dos.writeUTF(organization.getTitle());
-                            dos.writeUTF(organization.getWebsite() != null ? organization.getWebsite() : "" );
+                            dos.writeUTF(organization.getWebsite());
                             writeWithException(organization.getPeriods(), dos, period -> {
                                 dos.writeUTF(period.getStart().toString());
                                 dos.writeUTF(period.getEnd().toString());
-                                dos.writeUTF(period.getDescription() != null ? period.getDescription() : "");
+                                dos.writeUTF(period.getDescription());
                             });
                         });
                         break;
