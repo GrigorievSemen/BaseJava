@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.mystudies.basejava.Config;
 import ru.mystudies.basejava.exception.ExistStorageException;
 import ru.mystudies.basejava.exception.NotExistStorageException;
 import ru.mystudies.basejava.model.*;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR = new File("C:\\Users\\Sem\\Desktop\\Programming\\JavaProject\\IdeaProjects\\BaseJava\\HW\\storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
     private static final Comparator<Resume> RESUME_COMPARATOR =
             Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
     private static final String UUID_1 = "uuid1";

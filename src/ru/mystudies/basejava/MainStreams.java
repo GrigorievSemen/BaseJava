@@ -1,21 +1,19 @@
 package ru.mystudies.basejava;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toList;
 
 public class MainStreams {
-    public static void main(String[] args) {
-        System.out.println(minValue(new int[]{1, 2, 3, 3, 2, 3}));
-        System.out.println(minValue(new int[]{9, 8}));
+    public static void main(String[] args) throws IOException {
+        System.out.println(minValue(new int[]{1, 2, 3, 3, 2, 3})); //123
+        System.out.println(minValue(new int[]{9, 8})); //89
 
-        System.out.println(oddOrEven(new ArrayList<>(List.of(1, 2, 3, 4, 5, 6))));
-        System.out.println(oddOrEven(new ArrayList<>(List.of(2, 2, 2, 2, 2, 4))));
-        System.out.println(oddOrEven(new ArrayList<>(List.of(3, 3, 3, 3, 3, 1))));
+        System.out.println(oddOrEven(new ArrayList<>(List.of(1, 2, 3, 4, 5, 6)))); // [2, 4, 6]
+        System.out.println(oddOrEven(new ArrayList<>(List.of(2, 2, 2, 2, 2, 4)))); // []
+        System.out.println(oddOrEven(new ArrayList<>(List.of(3, 3, 3, 3, 3, 1)))); // [3, 3, 3, 3, 3, 1]
     }
 
     public static int minValue(int[] numbers) {
