@@ -1,9 +1,7 @@
 package ru.mystudies.basejava;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
@@ -11,9 +9,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class MainConcurrency {
     public static final int THREADS_NUMBER = 10000;
-    private int counter;
-    private final AtomicInteger atomicCounter = new AtomicInteger();
-
     //    private static final Object LOCK = new Object();
 //    private static final Lock lock = new ReentrantLock();
     private static final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
@@ -25,6 +20,8 @@ public class MainConcurrency {
             return new SimpleDateFormat();
         }
     };
+    private final AtomicInteger atomicCounter = new AtomicInteger();
+    private int counter;
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName());
