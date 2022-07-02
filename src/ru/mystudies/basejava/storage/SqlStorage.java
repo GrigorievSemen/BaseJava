@@ -51,13 +51,10 @@ public class SqlStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        sqlExecutor.perform("INSERT INTO resume (uuid, full_name) VALUES (?,?)", p_s -> {
-            p_s.setString(1, r.getUuid());
-            p_s.setString(2, r.getFullName());
-
-            if (p_s.executeUpdate() == 0) {
-                throw new ExistStorageException(r.getUuid());
-            }
+        sqlExecutor.perform("INSERT INTO resume (uuid, full_name) VALUES (?,?)", ps -> {
+            ps.setString(1, r.getUuid());
+            ps.setString(2, r.getFullName());
+            ps.execute();
             return null;
         });
     }
