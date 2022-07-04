@@ -1,13 +1,15 @@
 package ru.mystudies.basejava.model;
 
 public enum ContactType {
-    NUMBER_PHONE("Номер телефона"),
-    SKYPE("Скайп"),
-    EMAIL("Электронный адрес"),
-    PROFILE_LINKEDIN("Профиль LinkedIn"),
-    PROFILE_GITHUB("Профиль GitHub"),
-    PROFILE_STACKOVERFLOW("Профиль Stackoverflow"),
-    HOME_PAGE("Домашняя страница");
+    NUMBER_PHONE("РўРµР»."),
+    SKYPE("РњРѕР±РёР»СЊРЅС‹Р№"),
+    EMAIL("РџРѕС‡С‚Р°"),
+    HOME_PHONE("Р”РѕРјР°С€РЅРёР№ С‚РµР»."),
+    PROFILE_LINKEDIN("РџСЂРѕС„РёР»СЊ LinkedIn"),
+    PROFILE_GITHUB("РџСЂРѕС„РёР»СЊ GitHub"),
+    PROFILE_STACKOVERFLOW("РџСЂРѕС„РёР»СЊ Stackoverflow"),
+    HOME_PAGE("Р”РѕРјР°С€РЅСЏСЏ СЃС‚СЂР°РЅРёС†Р°");
+
     private final String title;
 
     ContactType(String title) {
@@ -17,6 +19,5 @@ public enum ContactType {
     public String getTitle() {
         return title;
     }
-
 }
 
