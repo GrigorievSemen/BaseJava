@@ -117,9 +117,7 @@ public class SqlStorage implements Storage {
                     map.put(uuid, resume);
                 }
 
-                if (value != null) {
-                    resume.addContact(ContactType.valueOf(rs.getString("type")), value);
-                }
+                resume.addContact(ContactType.valueOf(rs.getString("type")), value);
             }
 
             return new ArrayList<>(map.values());
