@@ -151,6 +151,8 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() throws IOException {
         List<Resume> resumes = new ArrayList<>(Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
         sortedArray(resumes);
+        System.out.println(resumes);
+        System.out.println(storage.getAllSorted().toArray());
         Assertions.assertArrayEquals(resumes.toArray(), storage.getAllSorted().toArray());
     }
 
