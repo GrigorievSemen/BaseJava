@@ -1,12 +1,12 @@
 package ru.mystudies.basejava.model;
 
 public enum SectionType {
-    OBJECTIVE("Позиция:\n"),
-    PERSONAL("Личные качества:\n"),
-    ACHIEVEMENT("Достижения:\n"),
-    QUALIFICATIONS("Квалификация:\n"),
-    EXPERIENCE("Опыт работы:\n"),
-    EDUCATION("Образование:\n");
+    OBJECTIVE("Позиция:"),
+    PERSONAL("Личные качества:"),
+    ACHIEVEMENT("Достижения:"),
+    QUALIFICATIONS("Квалификация:"),
+    EXPERIENCE("Опыт работы:"),
+    EDUCATION("Образование:");
 
     private final String title;
 

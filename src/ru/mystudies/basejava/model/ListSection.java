@@ -28,6 +28,13 @@ public class ListSection extends AbstractSection {
     }
 
     @Override
+    public String getItemsString() {
+        StringBuilder sb = new StringBuilder();
+        getItems().forEach(item -> sb.append(item).append("\n"));
+        return sb.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

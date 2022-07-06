@@ -14,6 +14,11 @@ public class TextSection extends AbstractSection {
         this.record = record;
     }
 
+    @Override
+    public String getItemsString() {
+        return record;
+    }
+
     public String getRecord() {
         return record;
     }
