@@ -10,13 +10,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
-    private static final File PROPS = new File("HW\\config\\resumes.properties");
+    private static final File PROPS = new File("C:\\Users\\Sem\\Desktop\\Programming\\JavaProject\\IdeaProjects\\BaseJava\\HW\\config\\resumes.properties");
     private static final Config INSTANCE = new Config();
     private final File storageDir;
     private final Storage storage;
 
     private Properties props = new Properties();
-
     private Config() {
         try (InputStream is = new FileInputStream(PROPS)) {
             props.load(is);

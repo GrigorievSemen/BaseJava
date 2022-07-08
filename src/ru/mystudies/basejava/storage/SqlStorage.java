@@ -125,45 +125,46 @@ public class SqlStorage implements Storage {
     public List<Resume> getAllSorted() {
         Map<String, Resume> map = new LinkedHashMap<>();
 
-        sqlHelper.execute("SELECT * FROM resume\n" +
-                "LEFT JOIN contact ON resume.uuid = contact.resume_uuid\n" +
-                "ORDER BY full_name, uuid", ps -> {
-            ResultSet rs = ps.executeQuery();
+        return sqlHelper.transactionalExecute(conn -> {
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name, uuid")) {
+                ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                String uuid = rs.getString("uuid");
-                String value = rs.getString("value");
-                Resume resume = map.get(uuid);
-
-                if (resume == null) {
-                    String full_name = rs.getString("full_name");
-                    resume = new Resume(uuid, full_name);
-                    map.put(uuid, resume);
+                while (rs.next()) {
+                    String uuid = rs.getString("uuid");
+                    map.put(uuid, new Resume(uuid, rs.getString("full_name")));
                 }
-
-                resume.addContact(ContactType.valueOf(rs.getString("type")), value);
             }
-            return null;
-        });
 
-        sqlHelper.execute("SELECT * FROM section", ps1 -> {
-            ResultSet rs1 = ps1.executeQuery();
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM contact")) {
+                ResultSet rs = ps.executeQuery();
 
-            while (rs1.next()) {
-                String value = rs1.getString("description");
-                if (value != null) {
-                    SectionType sectionType = SectionType.valueOf(rs1.getString("type"));
-
-                    if (sectionType.equals(SectionType.OBJECTIVE) || sectionType.equals(SectionType.PERSONAL)) {
-                        map.get(rs1.getString("resume_uuid")).addSection(sectionType, new TextSection(value));
-                    } else {
-                        map.get(rs1.getString("resume_uuid")).addSection(sectionType, new ListSection(List.of(value.split("\n"))));
+                while (rs.next()) {
+                    String value = rs.getString("value");
+                    if (value != null) {
+                        Resume resume = map.get(rs.getString("resume_uuid"));
+                        resume.addContact(ContactType.valueOf(rs.getString("type")), value);
                     }
                 }
             }
-            return null;
+
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM section")) {
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String value = rs.getString("description");
+                    if (value != null) {
+                        SectionType sectionType = SectionType.valueOf(rs.getString("type"));
+
+                        if (sectionType.equals(SectionType.OBJECTIVE) || sectionType.equals(SectionType.PERSONAL)) {
+                            map.get(rs.getString("resume_uuid")).addSection(sectionType, new TextSection(value));
+                        } else {
+                            map.get(rs.getString("resume_uuid")).addSection(sectionType, new ListSection(List.of(value.split("\n"))));
+                        }
+                    }
+                }
+                return new ArrayList<>(map.values());
+            }
         });
-        return new ArrayList<>(map.values());
     }
 
     @Override
