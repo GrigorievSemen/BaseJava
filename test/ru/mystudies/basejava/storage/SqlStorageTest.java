@@ -1,3 +1,5 @@
+package ru.mystudies.basejava.storage;
+
 import ru.mystudies.basejava.Config;
 
 public class SqlStorageTest extends AbstractStorageTest {

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Array based storage for Resumes
+ * Array based ru.mystudies.basejava.storage for Resumes
  */
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     public static final int STORAGE_LIMIT = 10_000;

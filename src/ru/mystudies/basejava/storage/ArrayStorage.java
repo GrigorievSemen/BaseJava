@@ -3,7 +3,7 @@ package ru.mystudies.basejava.storage;
 import ru.mystudies.basejava.model.Resume;
 
 /**
- * Array based storage for Resumes
+ * Array based ru.mystudies.basejava.storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
 

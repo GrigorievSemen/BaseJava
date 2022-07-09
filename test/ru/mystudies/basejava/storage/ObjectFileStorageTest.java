@@ -1,4 +1,5 @@
-import ru.mystudies.basejava.storage.FileStorage;
+package ru.mystudies.basejava.storage;
+
 import ru.mystudies.basejava.storage.serializer.ObjectStreamSerializer;
 
 public class ObjectFileStorageTest extends AbstractStorageTest {

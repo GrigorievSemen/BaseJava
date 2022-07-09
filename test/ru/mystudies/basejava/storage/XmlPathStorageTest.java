@@ -1,4 +1,5 @@
-import ru.mystudies.basejava.storage.PathStorage;
+package ru.mystudies.basejava.storage;
+
 import ru.mystudies.basejava.storage.serializer.XmlStreamSerializer;
 
 public class XmlPathStorageTest extends AbstractStorageTest {

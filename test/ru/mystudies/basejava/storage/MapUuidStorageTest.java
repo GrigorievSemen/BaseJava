@@ -1,4 +1,4 @@
-import ru.mystudies.basejava.storage.MapUuidStorage;
+package ru.mystudies.basejava.storage;
 
 public class MapUuidStorageTest extends AbstractStorageTest {
     public static MapUuidStorage mapUuidStorage = new MapUuidStorage();

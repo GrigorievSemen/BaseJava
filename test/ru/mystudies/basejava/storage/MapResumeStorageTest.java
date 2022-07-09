@@ -1,4 +1,4 @@
-import ru.mystudies.basejava.storage.MapResumeStorage;
+package ru.mystudies.basejava.storage;
 
 public class MapResumeStorageTest extends AbstractStorageTest {
     public static MapResumeStorage mapResumeStorage = new MapResumeStorage();
