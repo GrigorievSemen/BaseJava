@@ -22,7 +22,7 @@ public class Resume implements Serializable {
 
 
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-    private final Map<SectionType, AbstractSection> section = new EnumMap<>(SectionType.class);
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume() {
         this.uuid = UUID.randomUUID().toString();
@@ -47,16 +47,25 @@ public class Resume implements Serializable {
     }
 
     public Map<SectionType, AbstractSection> getSection() {
-        return section;
+        return sections;
     }
 
-    public void addContact(ContactType type, String field) {
-        contacts.put(type, field);
+    public String getContact(ContactType type) {
+        return contacts.get(type);
     }
 
-    public void addSection(SectionType type, AbstractSection abstractSection) {
-        section.put(type, abstractSection);
+    public AbstractSection getSection(SectionType type) {
+        return sections.get(type);
     }
+
+    public void addContact(ContactType type, String value) {
+        contacts.put(type, value);
+    }
+
+    public void addSection(SectionType type, AbstractSection section) {
+        sections.put(type, section);
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -66,12 +75,12 @@ public class Resume implements Serializable {
         return uuid.equals(resume.uuid) &&
                 fullName.equals(resume.fullName) &&
                 contacts.equals(resume.contacts) &&
-                section.equals(resume.section);
+                sections.equals(resume.sections);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName, contacts, section);
+        return Objects.hash(uuid, fullName, contacts, sections);
     }
 
     public void printContacts() {
@@ -79,7 +88,7 @@ public class Resume implements Serializable {
     }
 
     public void printSection() {
-        section.forEach((key, value) -> System.out.println(key.getTitle() + value));
+        sections.forEach((key, value) -> System.out.println(key.getTitle() + value));
     }
 
     @Override
@@ -88,7 +97,7 @@ public class Resume implements Serializable {
         sb.append(fullName).append("\n");
         contacts.forEach((key, value) -> sb.append(value).append("\n"));
         sb.append("\n");
-        section.forEach((key, value) -> sb.append(key.getTitle()).append("\n").append(value).append("\n"));
+        sections.forEach((key, value) -> sb.append(key.getTitle()).append("\n").append(value).append("\n"));
         return sb.toString();
     }
 }

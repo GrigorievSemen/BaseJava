@@ -18,7 +18,11 @@ public class SqlStorage implements Storage {
     private final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) throws ClassNotFoundException {
-        Class.forName("org.postgresql.Driver");
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
         sqlHelper = new SqlHelper(dbUrl, dbUser, dbPassword);
     }
 
@@ -45,11 +49,7 @@ public class SqlStorage implements Storage {
                 ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    String value = rs.getString("value");
-                    if (value != null) {
-                        ContactType type = ContactType.valueOf(rs.getString("type"));
-                        resume.addContact(type, value);
-                    }
+                   addContact(rs,resume);
                 }
             }
 
@@ -181,20 +181,19 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void deleteContacts(Resume resume, Connection conn) {
-        sqlHelper.execute("DELETE  FROM contact WHERE resume_uuid=?", ps -> {
-            ps.setString(1, resume.getUuid());
-            ps.execute();
-            return null;
-        });
+    private void deleteContacts(Resume resume, Connection conn) throws SQLException {
+        deleteAttributes(resume,conn,"DELETE  FROM contact WHERE resume_uuid=?");
     }
 
-    private void deleteSection(Resume resume, Connection conn) {
-        sqlHelper.execute("DELETE  FROM section WHERE resume_uuid=?", ps -> {
+    private void deleteSection(Resume resume, Connection conn) throws SQLException {
+        deleteAttributes(resume,conn,"DELETE  FROM section WHERE resume_uuid=?");
+    }
+
+    private void deleteAttributes(Resume resume, Connection conn, String sql) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, resume.getUuid());
             ps.execute();
-            return null;
-        });
+        }
     }
 
     private void addContact(ResultSet rs, Resume resume) throws SQLException {
