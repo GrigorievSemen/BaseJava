@@ -16,7 +16,7 @@ public class TextSection extends AbstractSection {
 
     @Override
     public String getItemsString() {
-        return record;
+        return (record != null && record.trim().length() != 0) ? record.trim() : "";
     }
 
     public String getRecord() {

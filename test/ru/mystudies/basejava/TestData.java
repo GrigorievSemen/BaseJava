@@ -24,11 +24,11 @@ public class TestData {
         RESUME_1.addContact(ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow1");
         RESUME_1.addContact(ContactType.HOME_PAGE, "Home1");
 
-        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective_1"));
-        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Personal_1"));
+        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Позиция_1"));
+        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Личные качества_1"));
 
-        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achieve1", "Achieve11"));
-        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications_1", "Qualifications_11"));
+        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Достижение_1", "Достижение_11"));
+        RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Квалификация_1", "Квалификация_11"));
 
 //        RESUME_1.addSection(SectionType.EXPERIENCE,
 //                new OrganizationSection(

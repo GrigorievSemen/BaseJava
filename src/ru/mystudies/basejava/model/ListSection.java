@@ -29,9 +29,15 @@ public class ListSection extends AbstractSection {
 
     @Override
     public String getItemsString() {
-        StringBuilder sb = new StringBuilder();
-        getItems().forEach(item -> sb.append(item).append("\n"));
-        return sb.toString();
+        if(items.size() != 0){
+            StringBuilder sb = new StringBuilder();
+            getItems().forEach(item -> {
+                if(item != null && item.trim().length() != 0)
+                    sb.append(item).append("\n");
+            });
+            return sb.toString();
+        }
+        return "";
     }
 
     @Override
@@ -50,7 +56,7 @@ public class ListSection extends AbstractSection {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
-            sb.append(i + 1).append(". ").append(items.get(i)).append("\n");
+            sb.append(items.get(i)).append("\n");
         }
         return sb.toString();
     }

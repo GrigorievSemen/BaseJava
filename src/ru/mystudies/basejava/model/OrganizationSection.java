@@ -29,7 +29,7 @@ public class OrganizationSection extends AbstractSection {
     @Override
     public String getItemsString() {
         //TODO
-        return null;
+        return "";
     }
 
     @Override

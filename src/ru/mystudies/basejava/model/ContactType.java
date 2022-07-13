@@ -2,7 +2,7 @@ package ru.mystudies.basejava.model;
 
 public enum ContactType {
     NUMBER_PHONE("Тел."),
-    SKYPE("Мобильный") {
+    SKYPE("Skype") {
         @Override
         public String toHtml0(String value) {
             return getTitle() + ": " + toLink("skype:" + value, value);

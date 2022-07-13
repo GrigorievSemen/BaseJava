@@ -18,7 +18,7 @@ public class Resume implements Serializable {
     private static final long serialVersionUID = 1L;
     // Unique identifier
     private final String uuid;
-    private final String fullName;
+    private String fullName;
 
 
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
@@ -40,6 +40,10 @@ public class Resume implements Serializable {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Map<ContactType, String> getContacts() {
