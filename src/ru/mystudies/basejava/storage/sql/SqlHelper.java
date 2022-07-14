@@ -1,7 +1,7 @@
 package ru.mystudies.basejava.storage.sql;
 
 
-import org.junit.platform.commons.util.ExceptionUtils;
+
 import ru.mystudies.basejava.exception.ExistStorageException;
 import ru.mystudies.basejava.exception.StorageException;
 
@@ -38,7 +38,7 @@ public class SqlHelper {
                 return res;
             } catch (SQLException e) {
                 conn.rollback();
-                throw ExceptionUtils.throwAsUncheckedException(e);
+                throw new ExistStorageException(null);
             }
         } catch (SQLException e) {
             if (e.getSQLState().equals("23505")) {

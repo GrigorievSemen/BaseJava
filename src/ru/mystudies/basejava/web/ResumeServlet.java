@@ -1,9 +1,12 @@
 package ru.mystudies.basejava.web;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 import ru.mystudies.basejava.Config;
 import ru.mystudies.basejava.model.*;
 import ru.mystudies.basejava.storage.Storage;
@@ -16,6 +19,7 @@ public class ResumeServlet extends HttpServlet {
     private Storage storage;
 
     @Override
+
     public void init() throws ServletException {
         super.init();
         storage = Config.get().getStorage();
