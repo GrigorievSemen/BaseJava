@@ -18,7 +18,7 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
             <dt>Имя:</dt>
-            <dd><input type="text" name="fullName" size=50 value="${resume.fullName}"></dd>
+            <dd><input type="text" name="fullName" size=50 required value="${resume.fullName}"></dd>
         </dl>
         <h3>Контакты:</h3>
         <c:forEach var="type" items="<%=ContactType.values()%>">
@@ -36,17 +36,17 @@
 
             <dl>
                 <dt>${type.title}</dt>
-                <c:set var="listTextToOut"
+                <c:set var="text"
                        value="<%=ResumeUtil.sectionDataToString(type,resume)%>"/>
 
-                <c:if test="${listTextToOut.size() == 0}">
-                    <p><textarea placeholder = "Введите данные" wrap="hard" rows="3" cols="50" name="${type.name()}"></textarea></p>
+                <c:if test="${text.length() == 0}">
+                    <p><textarea placeholder="Введите данные" wrap="hard" rows="3" cols="50"
+                                 name="${type.name()}"></textarea></p>
                 </c:if>
 
-                <c:forEach var="text" items="${listTextToOut}">
-                        <p><textarea placeholder = "Введите данные" wrap="hard" rows="3" cols="50" name="${type.name()}">${text}</textarea></p>
-                </c:forEach>
-
+                <c:if test="${text.length() != 0}">
+                    <p><textarea wrap="hard" rows="3" cols="50" name="${type.name()}">${text}</textarea></p>
+                </c:if>
             </dl>
 
         </c:forEach>

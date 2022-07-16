@@ -29,13 +29,15 @@
                          type="java.util.Map.Entry<ru.mystudies.basejava.model.SectionType, ru.mystudies.basejava.model.AbstractSection>"/>
 
             <c:set var="listTextToOut"
-                   value="<%=ResumeUtil.sectionDataToString(sectionEntry.getKey(),resume)%>"/>
+                   value="<%=ResumeUtil.sectionDataToList(sectionEntry.getKey(),resume)%>"/>
 
         <c:if test="${listTextToOut.size() != 0}">
     <h3><%=sectionEntry.getKey().getTitle()%></h3>
     <ul>
         <c:forEach var="text" items="${listTextToOut}">
-            <li>${text}</li>
+            <c:if test="${text.trim().length() != 0}">
+                <li>${text}</li>
+            </c:if>
         </c:forEach>
     </ul>
     </c:if>

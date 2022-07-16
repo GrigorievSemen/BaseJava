@@ -11,9 +11,22 @@ import static ru.mystudies.basejava.model.SectionType.*;
 
 public class ResumeUtil {
 
-    public static List<String> sectionDataToString(SectionType sectionType, Resume resume) {
+    public static String sectionDataToString(SectionType sectionType, Resume resume) {
         AbstractSection abstractSection = resume.getSection().get(sectionType);
-        if(abstractSection != null){
+        String value = "";
+        if (abstractSection != null) {
+            value = abstractSection.getItemsString();
+            if (value != null && value.trim().length() != 0) {
+                return value;
+            }
+        }
+        return value;
+    }
+
+    public static List<String> sectionDataToList(SectionType sectionType, Resume resume) {
+        AbstractSection abstractSection = resume.getSection().get(sectionType);
+
+        if (abstractSection != null) {
             String value = abstractSection.getItemsString();
             if (value != null && value.trim().length() != 0) {
                 if (OBJECTIVE.equals(sectionType) || PERSONAL.equals(sectionType)) {

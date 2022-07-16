@@ -1,16 +1,14 @@
 package ru.mystudies.basejava.web;
 
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
 import ru.mystudies.basejava.Config;
 import ru.mystudies.basejava.model.*;
 import ru.mystudies.basejava.storage.Storage;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,29 +35,29 @@ public class ResumeServlet extends HttpServlet {
 
         Resume resume;
 
-        if(uuid == null){
+        if (uuid == null) {
             resume = new Resume();
             storage.save(resume);
             uuid = resume.getUuid();
         }
 
-            switch (action) {
-                case "delete":
-                    storage.delete(uuid);
-                    response.sendRedirect("resume");
-                    return;
-                case "view":
-                case "edit":
-                    resume = storage.get(uuid);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Action " + action + " is illegal");
-            }
-            request.setAttribute("resume", resume);
-            request.getRequestDispatcher("view".equals(action) ? "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/edit.jsp")
-                    .forward(request, response);
+        switch (action) {
+            case "delete":
+                storage.delete(uuid);
+                response.sendRedirect("resume");
+                return;
+            case "view":
+            case "edit":
+                resume = storage.get(uuid);
+                break;
+            default:
+                throw new IllegalArgumentException("Action " + action + " is illegal");
+        }
+        request.setAttribute("resume", resume);
+        request.getRequestDispatcher("view".equals(action) ? "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/edit.jsp")
+                .forward(request, response);
 
-            //        request.setCharacterEncoding("UTF-8");
+        //        request.setCharacterEncoding("UTF-8");
 //        response.setCharacterEncoding("UTF-8");
 //        response.setContentType("text/html; charset=UTF-8");
 //        PrintWriter printWriter = response.getWriter();
@@ -85,7 +83,7 @@ public class ResumeServlet extends HttpServlet {
 //        }
 //
 //        printWriter.write("</table>\n" + "</body>\n" + "</html>\n");
-        }
+    }
 
 
     @Override
@@ -94,47 +92,45 @@ public class ResumeServlet extends HttpServlet {
 
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        if(!fullName.equals("")){
-            List<String> listAchievement = new ArrayList<>();
-            List<String> listQualifications = new ArrayList<>();
 
-            Resume resume = storage.get(uuid);
-            resume.setFullName(fullName);
+        List<String> listAchievement = new ArrayList<>();
+        List<String> listQualifications = new ArrayList<>();
 
-            for (ContactType contactType : ContactType.values()) {
-                String value = request.getParameter(contactType.name());
-                if (value != null && value.trim().length() != 0) {
-                    resume.addContact(contactType, value);
-                } else {
-                    resume.getContacts().remove(contactType);
-                }
+        Resume resume = storage.get(uuid);
+        resume.setFullName(fullName);
+
+        for (ContactType contactType : ContactType.values()) {
+            String value = request.getParameter(contactType.name());
+            if (value != null && value.trim().length() != 0) {
+                resume.addContact(contactType, value);
+            } else {
+                resume.getContacts().remove(contactType);
             }
+        }
 
-            for (SectionType sectionType : SectionType.values()) {
-                String[] value = request.getParameterValues(sectionType.name());
-                if (value != null) {
-                    for (String str : value) {
-                        switch (sectionType) {
-                            case OBJECTIVE:
-                            case PERSONAL:
-                                resume.addSection(sectionType, new TextSection(str));
-                                break;
-                            case ACHIEVEMENT:
-                                listAchievement.add(str);
-                                break;
-                            case QUALIFICATIONS:
-                                listQualifications.add(str);
-                                break;
-                        }
+        for (SectionType sectionType : SectionType.values()) {
+            String[] value = request.getParameterValues(sectionType.name());
+            if (value != null) {
+                for (String str : value) {
+                    switch (sectionType) {
+                        case OBJECTIVE:
+                        case PERSONAL:
+                            resume.addSection(sectionType, new TextSection(str));
+                            break;
+                        case ACHIEVEMENT:
+                            listAchievement.add(str);
+                            break;
+                        case QUALIFICATIONS:
+                            listQualifications.add(str);
+                            break;
                     }
                 }
             }
-            resume.addSection(SectionType.ACHIEVEMENT, new ListSection(listAchievement));
-            resume.addSection(SectionType.QUALIFICATIONS, new ListSection(listQualifications));
-            storage.update(resume);
-        } else {
-            storage.delete(uuid);
         }
+        resume.addSection(SectionType.ACHIEVEMENT, new ListSection(listAchievement));
+        resume.addSection(SectionType.QUALIFICATIONS, new ListSection(listQualifications));
+        storage.update(resume);
+
         response.sendRedirect("resume");
     }
 }
