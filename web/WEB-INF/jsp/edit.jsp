@@ -18,7 +18,7 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
             <dt>Имя:</dt>
-            <dd><input type="text" name="fullName" size=50 required value="${resume.fullName}"></dd>
+            <dd><input type="text" name="fullName" size=50 placeholder="Ваше Имя" required pattern=" *[A-Za-zА-Яа-яЁё]+( +[A-Za-zА-Яа-яЁё]+[ ]*)*$" title="Поле должно содержать только слова" value="${resume.fullName}"></dd>
         </dl>
         <h3>Контакты:</h3>
         <c:forEach var="type" items="<%=ContactType.values()%>">

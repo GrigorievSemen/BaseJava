@@ -4,10 +4,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Initial resume class
@@ -39,7 +37,7 @@ public class Resume implements Serializable {
     }
 
     public String getFullName() {
-        return fullName;
+        return fullName.replaceAll("\\s+", " ");
     }
 
     public void setFullName(String fullName) {
