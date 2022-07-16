@@ -94,44 +94,47 @@ public class ResumeServlet extends HttpServlet {
 
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        List<String> listAchievement = new ArrayList<>();
-        List<String> listQualifications = new ArrayList<>();
+        if(!fullName.equals("")){
+            List<String> listAchievement = new ArrayList<>();
+            List<String> listQualifications = new ArrayList<>();
 
-        Resume resume = storage.get(uuid);
-        resume.setFullName(fullName);
+            Resume resume = storage.get(uuid);
+            resume.setFullName(fullName);
 
-        for (ContactType contactType : ContactType.values()) {
-            String value = request.getParameter(contactType.name());
-            if (value != null && value.trim().length() != 0) {
-                resume.addContact(contactType, value);
-            } else {
-                resume.getContacts().remove(contactType);
+            for (ContactType contactType : ContactType.values()) {
+                String value = request.getParameter(contactType.name());
+                if (value != null && value.trim().length() != 0) {
+                    resume.addContact(contactType, value);
+                } else {
+                    resume.getContacts().remove(contactType);
+                }
             }
-        }
 
-        for (SectionType sectionType : SectionType.values()) {
-            String[] value = request.getParameterValues(sectionType.name());
-            if (value != null) {
-                for (String str : value) {
-                    switch (sectionType) {
-                        case OBJECTIVE:
-                        case PERSONAL:
-                            resume.addSection(sectionType, new TextSection(str));
-                            break;
-                        case ACHIEVEMENT:
-                            listAchievement.add(str);
-                            break;
-                        case QUALIFICATIONS:
-                            listQualifications.add(str);
-                            break;
+            for (SectionType sectionType : SectionType.values()) {
+                String[] value = request.getParameterValues(sectionType.name());
+                if (value != null) {
+                    for (String str : value) {
+                        switch (sectionType) {
+                            case OBJECTIVE:
+                            case PERSONAL:
+                                resume.addSection(sectionType, new TextSection(str));
+                                break;
+                            case ACHIEVEMENT:
+                                listAchievement.add(str);
+                                break;
+                            case QUALIFICATIONS:
+                                listQualifications.add(str);
+                                break;
+                        }
                     }
                 }
             }
+            resume.addSection(SectionType.ACHIEVEMENT, new ListSection(listAchievement));
+            resume.addSection(SectionType.QUALIFICATIONS, new ListSection(listQualifications));
+            storage.update(resume);
+        } else {
+            storage.delete(uuid);
         }
-        resume.addSection(SectionType.ACHIEVEMENT, new ListSection(listAchievement));
-        resume.addSection(SectionType.QUALIFICATIONS, new ListSection(listQualifications));
-
-        storage.update(resume);
         response.sendRedirect("resume");
     }
 }

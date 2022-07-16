@@ -19,8 +19,12 @@
             <th></th>
             <th></th>
         </tr>
-        <c:forEach items="${resumes}" var="resume">
+
+
+
+        <c:forEach  var="resume" items="${resumes}">
             <jsp:useBean id="resume" type="ru.mystudies.basejava.model.Resume"/>
+
             <tr>
                 <td><a href='resume?uuid=${resume.uuid}&action=view'>${resume.fullName}</a></td>
                 <td><%=ContactType.EMAIL.toHtml(resume.getContact(ContactType.EMAIL))%>
@@ -28,7 +32,10 @@
                 <td><a href="resume?uuid=${resume.uuid}&action=delete"><img src="img/delete.png"></a></td>
                 <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></td>
             </tr>
+
         </c:forEach>
+
+
     </table>
 </section>
 

@@ -37,11 +37,14 @@
             <dl>
                 <dt>${type.title}</dt>
                 <c:set var="listTextToOut"
-                       value="<%=ResumeUtil.getDataBySectionType(type,resume)%>"/>
+                       value="<%=ResumeUtil.sectionDataToString(type,resume)%>"/>
+
+                <c:if test="${listTextToOut.size() == 0}">
+                    <p><textarea placeholder = "Введите данные" wrap="hard" rows="3" cols="50" name="${type.name()}"></textarea></p>
+                </c:if>
 
                 <c:forEach var="text" items="${listTextToOut}">
-                    <dd><input type="text" name="${type.name()}" size=30
-                               value="${text}"></dd>
+                        <p><textarea placeholder = "Введите данные" wrap="hard" rows="3" cols="50" name="${type.name()}">${text}</textarea></p>
                 </c:forEach>
 
             </dl>
