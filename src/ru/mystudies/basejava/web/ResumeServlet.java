@@ -4,6 +4,7 @@ package ru.mystudies.basejava.web;
 import ru.mystudies.basejava.Config;
 import ru.mystudies.basejava.model.*;
 import ru.mystudies.basejava.storage.Storage;
+import ru.mystudies.basejava.util.DateUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -86,6 +87,23 @@ public class ResumeServlet extends HttpServlet {
     }
 
 
+    private static void createOrganization(String[] value, List<Organization> organizations) {
+        for (int i = 0; i < value.length - 1; i++) {
+            Organization organization = new Organization();
+            List<Period> periods = new ArrayList<>();
+            organization.setTitle(value[i].trim());
+            organization.setWebsite(value[++i].trim());
+            organization.setPosition(value[++i].trim());
+            periods.add(new Period(DateUtil.fromInt(value[++i].trim()), DateUtil.fromInt(value[++i].trim()), value[++i]));
+            while (i < value.length - 1 && value[i + 2].matches("(19|20)\\d\\d-((0[1-9]|1[012])-(0[1-9]|[12]\\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)")) {
+                organization.setPosition(value[++i]);
+                periods.add(new Period(DateUtil.fromInt(value[++i].trim()), DateUtil.fromInt(value[++i].trim()), value[++i]));
+            }
+            organization.setPeriods(periods);
+            organizations.add(organization);
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -95,6 +113,8 @@ public class ResumeServlet extends HttpServlet {
 
         List<String> listAchievement = new ArrayList<>();
         List<String> listQualifications = new ArrayList<>();
+        List<Organization> organizationExp = new ArrayList<>();
+        List<Organization> organizationEd = new ArrayList<>();
 
         Resume resume = storage.get(uuid);
         resume.setFullName(fullName);
@@ -110,18 +130,31 @@ public class ResumeServlet extends HttpServlet {
 
         for (SectionType sectionType : SectionType.values()) {
             String[] value = request.getParameterValues(sectionType.name());
+
             if (value != null) {
-                for (String str : value) {
+                for (int i = 0; i < value.length; i++) {
                     switch (sectionType) {
                         case OBJECTIVE:
                         case PERSONAL:
-                            resume.addSection(sectionType, new TextSection(str));
+                            if (value[i] != null && value[i].trim().length() != 0) {
+                                resume.addSection(sectionType, new TextSection(value[i]));
+                            } else {
+                                resume.addSection(sectionType, new TextSection(""));
+                            }
                             break;
                         case ACHIEVEMENT:
-                            listAchievement.add(str);
+                            listAchievement.add(value[i]);
                             break;
                         case QUALIFICATIONS:
-                            listQualifications.add(str);
+                            listQualifications.add(value[i]);
+                            break;
+                        case EXPERIENCE:
+                            createOrganization(value, organizationExp);
+                            i = value.length;
+                            break;
+                        case EDUCATION:
+                            createOrganization(value, organizationEd);
+                            i = value.length;
                             break;
                     }
                 }
@@ -129,8 +162,9 @@ public class ResumeServlet extends HttpServlet {
         }
         resume.addSection(SectionType.ACHIEVEMENT, new ListSection(listAchievement));
         resume.addSection(SectionType.QUALIFICATIONS, new ListSection(listQualifications));
+        resume.addSection(SectionType.EXPERIENCE, new OrganizationSection(organizationExp));
+        resume.addSection(SectionType.EDUCATION, new OrganizationSection(organizationEd));
         storage.update(resume);
-
         response.sendRedirect("resume");
     }
 }

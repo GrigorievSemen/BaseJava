@@ -44,6 +44,7 @@ public class DataStreamSerializer implements StreamSerializer {
                         writeWithException(((OrganizationSection) section).getOrganizations(), dos, organization -> {
                             dos.writeUTF(organization.getTitle());
                             dos.writeUTF(organization.getWebsite());
+                            dos.writeUTF(organization.getPosition());
                             writeWithException(organization.getPeriods(), dos, period -> {
                                 dos.writeUTF(period.getStart().toString());
                                 dos.writeUTF(period.getEnd().toString());
@@ -80,7 +81,7 @@ public class DataStreamSerializer implements StreamSerializer {
                     case EDUCATION:
                         resume.addSection(sectionType,
                                 new OrganizationSection(readWithException(dis, () ->
-                                        new Organization(dis.readUTF(), dis.readUTF(), readWithException(dis, () ->
+                                        new Organization(dis.readUTF(), dis.readUTF(), dis.readUTF(), readWithException(dis, () ->
                                                 new Period(LocalDate.parse(dis.readUTF()), LocalDate.parse(dis.readUTF()), dis.readUTF()))))));
                         break;
                 }

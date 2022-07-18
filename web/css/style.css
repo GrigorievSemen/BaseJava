@@ -3,6 +3,61 @@ section {
     margin: auto;
 }
 
+p.editTitle {
+    float: left;
+    margin: 0 auto;
+}
+
+p.editWeb {
+    margin: 0 auto;
+}
+
+p.editPosition {
+    float: left;
+    margin: 0 auto;
+}
+
+p.editStartPeriod {
+    float: left;
+    margin: 0 auto;
+}
+
+p.editEndPeriod {
+    margin: 0 auto;
+}
+
+p.editDescription {
+    margin: 0 auto;
+}
+
+div.title {
+    float: left;
+    font-size: large;
+    margin-right: 50px;
+    color: blueviolet;
+    background: rgba(210, 226, 226, 0.51);
+}
+
+div.period {
+    float: left;
+    line-height: 40px;
+    font-size: small;
+    margin-right: 50px;
+    color: black;
+}
+
+div.position {
+    line-height: 40px;
+    font-weight: bolder;
+    font-size: medium;
+    color: darkslateblue;
+}
+
+div.description {
+    color: black;
+    margin-left: 120px;
+}
+
 header {
     background: none repeat scroll 0 0 #A6C9E2;
     color: #2E6E9E;

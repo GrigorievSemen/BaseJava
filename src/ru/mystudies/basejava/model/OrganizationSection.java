@@ -27,9 +27,8 @@ public class OrganizationSection extends AbstractSection {
     }
 
     @Override
-    public String getItemsString() {
-        //TODO
-        return "";
+    public List<Organization> getItemsString() {
+        return organizations != null ? organizations : new ArrayList<>();
     }
 
     @Override
