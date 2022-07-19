@@ -95,7 +95,7 @@ public class ResumeServlet extends HttpServlet {
             organization.setWebsite(value[++i].trim());
             organization.setPosition(value[++i].trim());
             periods.add(new Period(DateUtil.fromInt(value[++i].trim()), DateUtil.fromInt(value[++i].trim()), value[++i]));
-            while (i < value.length - 1 && value[i + 2].matches("(19|20)\\d\\d-((0[1-9]|1[012])-(0[1-9]|[12]\\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)")) {
+            while (i < value.length - 1 && value[i + 2].matches("(19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1})")) {
                 organization.setPosition(value[++i]);
                 periods.add(new Period(DateUtil.fromInt(value[++i].trim()), DateUtil.fromInt(value[++i].trim()), value[++i]));
             }

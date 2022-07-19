@@ -65,11 +65,22 @@
             <c:forEach var="organization" items="${listOrganization}">
                 <ul>
                     <div class="section">
-                        <li>
-                            <div class="title"><a class="webLink"
-                                                  href="${organization.getWebsite()}">${organization.getTitle()}</a>
-                            </div>
-                        </li>
+
+                            <c:if test = "${organization.getWebsite().length() != 0}">
+                                <li>
+                                <div class="title"><a class="webLink"
+                                                      href="${organization.getWebsite()}">${organization.getTitle()}</a>
+                                </div>
+                                </li>
+                            </c:if>
+                            <c:if test = "${organization.getWebsite().length() == 0}">
+                                <li>
+                                    <div class="title">${organization.getTitle()}</div>
+                                </li>
+                            </c:if>
+
+
+
                         <div class="period_position">
                             <c:forEach var="period" items="${organization.getPeriods()}">
 

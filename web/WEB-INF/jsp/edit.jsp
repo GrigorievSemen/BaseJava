@@ -94,18 +94,17 @@
                                                                   size=20
                                                                   required
                                                                   placeholder="Дата в формате YYYY-MM-DD"
-                                                                  pattern="(19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1})-(0[1-9]{1}|1[0-9]{1}|2[0-9]{1}|3[01]{1})"
-                                                                  title="Поле должно иметь дату в формате (YYYY-MM-DD)">
+                                                                  pattern="(19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1})"
+                                                                  title="Поле должно иметь дату в формате (YYYY-MM)">
                                 </p>
                                 <p class="editEndPeriod"><input type="text" name="${type.name()}"
                                                                 value=""
                                                                 size=20 placeholder="Дата в формате YYYY-MM-DD"
-                                                                pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1})-(0[1-9]{1}|1[0-9]{1}|2[0-9]{1}|3[01]{1}))|[ ]*"
-                                                                title="Поле должно иметь дату в формате (YYYY-MM-DD) или пустое">
+                                                                pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1}))|[ ]*"
+                                                                title="Поле должно иметь дату в формате (YYYY-MM) или пустое">
                                 </p>
 
                                 <p class="editDescription"><textarea placeholder="Описание" wrap="hard" rows="1"
-                                                                     required
                                                                      cols="100"
                                                                      name="${type.name()}"></textarea>
                                 </p>
@@ -141,15 +140,15 @@
                                                                           value="${ResumeUtil.getPeriodStart(period)}"
                                                                           size=20
                                                                           placeholder="Дата в формате YYYY-MM-DD"
-                                                                          pattern="(19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1})-(0[1-9]{1}|1[0-9]{1}|2[0-9]{1}|3[01]{1})"
+                                                                          pattern="(19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1})"
                                                                           required
-                                                                          title="Поле должно иметь дату в формате (YYYY-MM-DD)">
+                                                                          title="Поле должно иметь дату в формате (YYYY-MM)">
                                         </p>
                                         <p class="editEndPeriod"><input type="text" name="${type.name()}"
                                                                         value="${ResumeUtil.getPeriodEnd(period)}"
                                                                         size=20 placeholder="Дата в формате YYYY-MM-DD"
-                                                                        pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1})-(0[1-9]{1}|1[0-9]{1}|2[0-9]{1}|3[01]{1}))|[ ]*"
-                                                                        title="Поле должно иметь дату в формате (YYYY-MM-DD) или пустое">
+                                                                        pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1}))|[ ]*"
+                                                                        title="Поле должно иметь дату в формате (YYYY-MM) или пустое">
                                         </p>
 
                                         </p>
@@ -157,7 +156,6 @@
 
                                         <p class="editDescription"><textarea placeholder="Описание" wrap="hard" rows="1"
                                                                              cols="100"
-                                                                             required
                                                                              name="${type.name()}">${period.getDescription()}</textarea>
                                         </p>
 

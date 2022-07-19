@@ -2,6 +2,7 @@ package ru.mystudies.basejava.util;
 
 import ru.mystudies.basejava.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,18 +44,21 @@ public class ResumeUtil {
     }
 
     public static String getPeriod(Period period) {
-        String start = period.getStart().toString();
-        String end = period.getEnd() == null ? "сейчас" : period.getEnd().toString();
+        String start = period.getStart().toString().substring(0, 7);
+        if(start.equals(LocalDate.now().toString().substring(0, 7))){
+            return "Cейчас";
+        }
+        String end = period.getEnd() == null ? "Cейчас" : period.getEnd().toString().substring(0, 7);
         return start + " / " + end;
     }
 
     public static String getPeriodStart(Period period) {
-        String start = period.getStart().toString();
+        String start = period.getStart().toString().substring(0, 7);
         return start;
     }
 
     public static String getPeriodEnd(Period period) {
-        String end = period.getEnd() == null ? "" : period.getEnd().toString();
+        String end = period.getEnd() == null ? "" : period.getEnd().toString().substring(0, 7);
         return end;
     }
 }
