@@ -9,6 +9,8 @@ import java.util.Objects;
 public class ListSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
 
+    public static final ListSection EMPTY = new ListSection("");
+
     private List<String> items = new ArrayList<>();
 
     public ListSection() {
@@ -32,10 +34,12 @@ public class ListSection extends AbstractSection {
         if(items.size() != 0){
             StringBuilder sb = new StringBuilder();
             getItems().forEach(item -> {
-                if(item != null && item.trim().length() != 0)
+                if(item != null && item.trim().length() != 0){
                     sb.append(item).append("\n");
+                }
             });
-            return sb.toString();
+
+            return sb.toString().trim();
         }
         return "";
     }

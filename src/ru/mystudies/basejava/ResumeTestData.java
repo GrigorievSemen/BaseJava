@@ -13,20 +13,20 @@ public class ResumeTestData {
     }
 
     public static void addContact(Resume resume, ContactType type, String value) {
-        resume.addContact(type, value);
+        resume.setContact(type, value);
     }
 
     public static void addObjectiveOrPersonal(Resume resume, SectionType type, String value) {
-        resume.addSection(type, new TextSection(value));
+        resume.setSection(type, new TextSection(value));
     }
 
     public static void addAchieveOrQualifications(Resume resume, SectionType type, String... value) {
         List<String> values = Arrays.asList(value);
-        resume.addSection(type, new ListSection(values));
+        resume.setSection(type, new ListSection(values));
     }
 
     public static void addExperienceOrEducation(Resume resume, SectionType type, Organization... organization) {
-        resume.addSection(type, new OrganizationSection(List.of(organization)));
+        resume.setSection(type, new OrganizationSection(List.of(organization)));
     }
 }
 

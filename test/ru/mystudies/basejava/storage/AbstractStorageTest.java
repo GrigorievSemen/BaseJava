@@ -62,7 +62,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void updateNotExist() {
         NotExistStorageException thrown = Assertions.assertThrows(NotExistStorageException.class, () -> {
-            storage.update(new Resume());
+            storage.get("dummy");
         });
     }
 
@@ -92,7 +92,6 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        Resume RESUME_4 = new Resume();
         storage.save(RESUME_4);
         assertGet(RESUME_4);
     }

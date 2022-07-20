@@ -1,6 +1,5 @@
-<%@ page import="ru.mystudies.basejava.model.ContactType" %>
-<%@ page import="ru.mystudies.basejava.model.SectionType" %>
-<%@ page import="ru.mystudies.basejava.util.ResumeUtil" %>
+<%@ page import="ru.mystudies.basejava.util.HtmlUtil" %>
+<%@ page import="ru.mystudies.basejava.model.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -14,94 +13,89 @@
 <body>
 <jsp:include page="fragments/header.jsp"/>
 <section>
-    <h2>${resume.fullName}&nbsp;<a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></h2>
+    <h1>${resume.fullName}<a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></h1>
     <p>
         <c:forEach var="contactEntry" items="${resume.contacts}">
             <jsp:useBean id="contactEntry"
                          type="java.util.Map.Entry<ru.mystudies.basejava.model.ContactType, java.lang.String>"/>
-            <%=contactEntry.getKey().toHtml(contactEntry.getValue())%><br/>
+                <%=contactEntry.getKey().toHtml(contactEntry.getValue())%><br/>
         </c:forEach>
-    </p>
-
     <p>
-        <c:forEach var="sectionEntry" items="${resume.section}">
+    <hr>
+    <table cellpadding="2">
+        <c:forEach var="sectionEntry" items="${resume.sections}">
             <jsp:useBean id="sectionEntry"
                          type="java.util.Map.Entry<ru.mystudies.basejava.model.SectionType, ru.mystudies.basejava.model.AbstractSection>"/>
+            <c:set var="type" value="${sectionEntry.key}"/>
+            <c:set var="section" value="${sectionEntry.value}"/>
+            <jsp:useBean id="section" type="ru.mystudies.basejava.model.AbstractSection"/>
 
-            <c:set var="sectionType" value="<%=sectionEntry.getKey()%>"/>
-            <c:set var="objective" value="<%=SectionType.OBJECTIVE%>"/>
-            <c:set var="personal" value="<%=SectionType.PERSONAL%>"/>
-            <c:set var="achievement" value="<%=SectionType.ACHIEVEMENT%>"/>
-            <c:set var="qualifications" value="<%=SectionType.QUALIFICATIONS%>"/>
-            <c:set var="experiense" value="<%=SectionType.EXPERIENCE%>"/>
-            <c:set var="education" value="<%=SectionType.EDUCATION%>"/>
+            <c:choose>
+                <c:when test="${type == 'OBJECTIVE' || type == 'PERSONAL'}">
+                        <c:if test="${!empty HtmlUtil.sectionDataToString(type,resume)}">
+                            <tr>
+                                <td colspan="2"><h2><a name="type.name">${type.title}</a></h2></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h3>${HtmlUtil.sectionDataToString(type,resume)}</h3>
+                                </td>
+                            </tr>
+                        </c:if>
+                </c:when>
+                <c:when test="${type=='QUALIFICATIONS' || type=='ACHIEVEMENT'}">
+                    <c:if test="${!empty HtmlUtil.sectionDataToString(type,resume)}">
+                        <tr>
+                            <td colspan="2"><h2><a name="type.name">${type.title}</a></h2></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <ul>
+                                    <c:forEach var="item" items="${HtmlUtil.sectionDataToList(type,resume)}">
+                                        <li>${item}</li>
+                                    </c:forEach>
+                                </ul>
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:when>
+                <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
 
-        <c:choose>
-        <c:when test="${sectionType.equals(objective) || sectionType.equals(personal) ||
-             sectionType.equals(achievement) || sectionType.equals(qualifications)}">
-            <c:set var="listTextToOut" value="${ResumeUtil.sectionDataToList(sectionType,resume)}"/>
+                    <c:set var="organizations" value="<%=((OrganizationSection) section).getOrganizations()%>"/>
+                    <c:forEach var="org" items="${organizations}">
+                        <c:if test = "${organizations.size()!=0}">
+                            <tr>
+                                <td colspan="2"><h2><a name="type.name">${type.title}</a></h2></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <c:choose>
+                                        <c:when test="${empty org.website}">
+                                            <h3>${org.title}</h3>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <h3><a href="${org.website}">${org.title}</a></h3>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                            <c:forEach var="period" items="${org.periods}">
+                                <jsp:useBean id="period" type="ru.mystudies.basejava.model.Period"/>
+                                <tr>
+                                    <td width="15%" style="vertical-align: top"><%=HtmlUtil.getPeriod(period)%>
+                                    </td>
+                                    <td><b>${period.position}</b><br>${period.description}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
 
-        <c:if test="${listTextToOut.size() != 0}">
-    <h3><%=sectionEntry.getKey().getTitle()%>
-    </h3>
-
-    <ul>
-        <c:forEach var="text" items="${listTextToOut}">
-            <c:if test="${text.trim().length() != 0}">
-                <li>${text}</li>
-            </c:if>
+                    </c:forEach>
+                </c:when>
+            </c:choose>
         </c:forEach>
-    </ul>
-    </c:if>
-    </c:when>
-
-
-    <c:when test="${sectionType.equals(experiense) || sectionType.equals(education)}">
-        <c:set var="listOrganization" value="<%=sectionEntry.getValue().getItemsString()%>"/>
-
-        <c:if test="${listOrganization.size() != 0}">
-            <h3><%=sectionEntry.getKey().getTitle()%>
-            </h3>
-            <c:forEach var="organization" items="${listOrganization}">
-                <ul>
-                    <div class="section">
-
-                            <c:if test = "${organization.getWebsite().length() != 0}">
-                                <li>
-                                <div class="title"><a class="webLink"
-                                                      href="${organization.getWebsite()}">${organization.getTitle()}</a>
-                                </div>
-                                </li>
-                            </c:if>
-                            <c:if test = "${organization.getWebsite().length() == 0}">
-                                <li>
-                                    <div class="title">${organization.getTitle()}</div>
-                                </li>
-                            </c:if>
-
-
-
-                        <div class="period_position">
-                            <c:forEach var="period" items="${organization.getPeriods()}">
-
-                                <div class="period">${ResumeUtil.getPeriod(period)}</div>
-
-                                <c:if test="${organization.getPosition().trim().length() != 0}">
-                                    <div class="position">${organization.getPosition()}</div>
-                                </c:if>
-                                <div style="clear: both;"></div>
-
-                                <div class="description">${period.getDescription()}</div>
-                                <br/></c:forEach>
-                        </div>
-                    </div>
-                </ul>
-            </c:forEach>
-        </c:if>
-    </c:when>
-    </c:choose>
-    </c:forEach>
-    </div>
+    </table>
+    <br/>
+    <button onclick="window.history.back()">ОК</button>
 </section>
 
 <jsp:include page="fragments/footer.jsp"/>

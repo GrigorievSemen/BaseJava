@@ -3,33 +3,6 @@ section {
     margin: auto;
 }
 
-p.editTitle {
-    float: left;
-    margin: 0 auto;
-}
-
-p.editWeb {
-    margin: 0 auto;
-}
-
-p.editPosition {
-    float: left;
-    margin: 0 auto;
-}
-
-p.editStartPeriod {
-    float: left;
-    margin: 0 auto;
-}
-
-p.editEndPeriod {
-    margin: 0 auto;
-}
-
-p.editDescription {
-    margin: 0 auto;
-}
-
 div.title {
     float: left;
     font-size: large;

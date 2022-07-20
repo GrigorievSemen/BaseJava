@@ -44,8 +44,8 @@ public class DataStreamSerializer implements StreamSerializer {
                         writeWithException(((OrganizationSection) section).getOrganizations(), dos, organization -> {
                             dos.writeUTF(organization.getTitle());
                             dos.writeUTF(organization.getWebsite());
-                            dos.writeUTF(organization.getPosition());
                             writeWithException(organization.getPeriods(), dos, period -> {
+                                dos.writeUTF(period.getPosition());
                                 dos.writeUTF(period.getStart().toString());
                                 dos.writeUTF(period.getEnd().toString());
                                 dos.writeUTF(period.getDescription());
@@ -64,25 +64,25 @@ public class DataStreamSerializer implements StreamSerializer {
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
 
-            Operate(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            Operate(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
 
             Operate(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        resume.addSection(sectionType, new TextSection(dis.readUTF()));
+                        resume.setSection(sectionType, new TextSection(dis.readUTF()));
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        resume.addSection(sectionType, new ListSection(readWithException(dis, dis::readUTF)));
+                        resume.setSection(sectionType, new ListSection(readWithException(dis, dis::readUTF)));
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        resume.addSection(sectionType,
+                        resume.setSection(sectionType,
                                 new OrganizationSection(readWithException(dis, () ->
-                                        new Organization(dis.readUTF(), dis.readUTF(), dis.readUTF(), readWithException(dis, () ->
-                                                new Period(LocalDate.parse(dis.readUTF()), LocalDate.parse(dis.readUTF()), dis.readUTF()))))));
+                                        new Organization(dis.readUTF(), dis.readUTF(), readWithException(dis, () ->
+                                                new Period(LocalDate.parse(dis.readUTF()), LocalDate.parse(dis.readUTF()), dis.readUTF(), dis.readUTF()))))));
                         break;
                 }
             });

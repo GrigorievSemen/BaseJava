@@ -12,16 +12,19 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Period implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final Period EMPTY = new Period();
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate start;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate end;
     private String description;
+    private String position;
 
     public Period() {
     }
 
-    public Period(LocalDate start, LocalDate end, String description) {
+    public Period(LocalDate start, LocalDate end, String position, String description) {
+        this.position = position == null ? "" : position;
         this.description = description == null ? "" : description;
         this.start = start;
         this.end = end;
@@ -37,6 +40,14 @@ public class Period implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     @Override

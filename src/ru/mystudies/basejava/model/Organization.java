@@ -11,25 +11,25 @@ public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
     private String title;
     private String website;
-    private String position;
     private List<Period> periods;
+
+    public static final Organization EMPTY = new Organization("", "", Period.EMPTY);
 
     public Organization() {
     }
 
-    public Organization(String title, String website, String position, Period... periods) {
-        this.position = position == null ? "" : position;
+    public Organization(String title, String website, Period... periods) {
         this.website = website == null ? "" : website;
         this.title = Objects.requireNonNull(title, "website must not be null");
         this.periods = List.of(periods);
     }
 
-    public Organization(String title, String website, String position, List<Period> periods) {
-        this.position = Objects.requireNonNull(position, "position must not be null");
+    public Organization(String title, String website, List<Period> periods) {
         this.website = Objects.requireNonNull(website, "website must not be null");
         this.title = Objects.requireNonNull(title, "website must not be null");
         this.periods = periods;
     }
+
 
     public String getWebsite() {
         return website;
@@ -57,15 +57,6 @@ public class Organization implements Serializable {
 
     public List<Period> getPeriods() {
         return periods;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     @Override
