@@ -62,11 +62,11 @@
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
 
                     <c:set var="organizations" value="<%=((OrganizationSection) section).getOrganizations()%>"/>
+                    <c:if test = "${organizations.size()!=0}">
+                        <tr>
+                            <td colspan="2"><h2><a name="type.name">${type.title}</a></h2></td>
+                        </tr>
                     <c:forEach var="org" items="${organizations}">
-                        <c:if test = "${organizations.size()!=0}">
-                            <tr>
-                                <td colspan="2"><h2><a name="type.name">${type.title}</a></h2></td>
-                            </tr>
                             <tr>
                                 <td colspan="2">
                                     <c:choose>
@@ -87,9 +87,8 @@
                                     <td><b>${period.position}</b><br>${period.description}</td>
                                 </tr>
                             </c:forEach>
-                        </c:if>
-
                     </c:forEach>
+                </c:if>
                 </c:when>
             </c:choose>
         </c:forEach>

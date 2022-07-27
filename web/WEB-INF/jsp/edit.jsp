@@ -65,11 +65,17 @@
 
                 <c:when test="${type.equals(experiense) || type.equals(education)}">
                     <c:set var="listOrganization" value="<%=HtmlUtil.organizationsList(type,resume)%>"/>
+        <dl>
+            <dt>${type.title}</dt>
+        </dl>
+                    <button type="submit" formaction="resume?&action=${type.name()}addOrganization">Добавить</button>
 
                     <c:forEach var="organization" items="${listOrganization}" varStatus="counter">
+                        <button type="submit" formaction="resume?&action=${counter.index}deleteOrganization${type.name()}">Удалить учреждение</button>
+
                         <dl>
                             <dt>Название учреждения:</dt>
-                            <dd><input type="text" placeholder="Название места" name='${type.name()}' size=100
+                            <dd><input type="text" placeholder="Название места"  name='${type.name()}' size=100
                                        value="${organization.getTitle()}"></dd>
                         </dl>
 
@@ -80,7 +86,9 @@
                             </dd>
                         </dl>
                         <div style="margin-left: 30px">
-                            <c:forEach var="period" items="${organization.getPeriods()}">
+
+                            <button type="submit" formaction="resume?&action=${counter.index}add">Добавить период</button><br><br/>
+                            <c:forEach var="period" items="${organization.getPeriods()}" varStatus="counterToDelete">
                                 <jsp:useBean id="period" type="ru.mystudies.basejava.model.Period"/>
                                 <dl>
                                     <dt>Начальная дата:</dt>
@@ -109,9 +117,13 @@
                                 <dl>
                                     <dt>Описание:</dt>
                                     <dd><textarea name="${counter.index}${type.name()}description" rows=5
-                                                  cols=75 placeholder="Описание">${period.getDescription()}</textarea>
+                                                  cols=75 placeholder="Описание" >${period.getDescription()}</textarea>
                                     </dd>
                                 </dl>
+                                <button type="submit" formaction="resume?&action=${counterToDelete.index}delete">Удалить период</button>
+                                <br><br/>
+
+
                             </c:forEach>
                         </div>
                     </c:forEach>
@@ -124,6 +136,7 @@
         <button type="submit">Сохранить</button>
         <button type="reset" onclick="window.history.back()">Отменить</button>
     </form>
+
 </section>
 
 <jsp:include page="fragments/footer.jsp"/>
