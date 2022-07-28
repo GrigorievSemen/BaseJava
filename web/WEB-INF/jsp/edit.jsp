@@ -70,12 +70,15 @@
         </dl>
                     <button type="submit" formaction="resume?&action=${type.name()}addOrganization">Добавить</button>
 
-                    <c:forEach var="organization" items="${listOrganization}" varStatus="counter">
-                        <button type="submit" formaction="resume?&action=${counter.index}deleteOrganization${type.name()}">Удалить учреждение</button>
+                    <c:forEach var="organization" items="${listOrganization}" varStatus="counterOrganization">
+
+                        <button type="submit" formaction="resume?&action=${counterOrganization.index}deleteOrganization${type.name()}">Удалить учреждение</button>
 
                         <dl>
                             <dt>Название учреждения:</dt>
                             <dd><input type="text" placeholder="Название места"  name='${type.name()}' size=100
+                                       required
+                                       title="Поле должно быть заполнено"
                                        value="${organization.getTitle()}"></dd>
                         </dl>
 
@@ -87,13 +90,13 @@
                         </dl>
                         <div style="margin-left: 30px">
 
-                            <button type="submit" formaction="resume?&action=${counter.index}add">Добавить период</button><br><br/>
-                            <c:forEach var="period" items="${organization.getPeriods()}" varStatus="counterToDelete">
+                            <button type="submit" formaction="resume?&action=${counterOrganization.index}addPeriod">Добавить период</button><br><br/>
+                            <c:forEach var="period" items="${organization.getPeriods()}" varStatus="counterPeriod">
                                 <jsp:useBean id="period" type="ru.mystudies.basejava.model.Period"/>
                                 <dl>
                                     <dt>Начальная дата:</dt>
                                     <dd>
-                                        <input type="text" name="${counter.index}${type.name()}startPeriod" size=10
+                                        <input type="text" name="${counterOrganization.index}${type.name()}startPeriod" size=10
                                                value="${HtmlUtil.getPeriodStart(period)}"
                                                placeholder="YYYY-MM"
                                                pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1}))|[ ]*"
@@ -103,7 +106,7 @@
                                 <dl>
                                     <dt>Конечная дата:</dt>
                                     <dd>
-                                        <input type="text" name="${counter.index}${type.name()}endPeriod" size=10
+                                        <input type="text" name="${counterOrganization.index}${type.name()}endPeriod" size=10
                                                value="${HtmlUtil.getPeriodEnd(period)}"
                                                placeholder="YYYY-MM"
                                                pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1}))|[ ]*"
@@ -111,16 +114,16 @@
                                 </dl>
                                 <dl>
                                     <dt>Должность:</dt>
-                                    <dd><input type="text" name="${counter.index}${type.name()}position" size=75
+                                    <dd><input type="text" name="${counterOrganization.index}${type.name()}position" size=75
                                                value="${period.getPosition()}" placeholder="Занимаемая должность">
                                 </dl>
                                 <dl>
                                     <dt>Описание:</dt>
-                                    <dd><textarea name="${counter.index}${type.name()}description" rows=5
+                                    <dd><textarea name="${counterOrganization.index}${type.name()}description" rows=5
                                                   cols=75 placeholder="Описание" >${period.getDescription()}</textarea>
                                     </dd>
                                 </dl>
-                                <button type="submit" formaction="resume?&action=${counterToDelete.index}delete">Удалить период</button>
+                                <button type="submit" formaction="resume?&action=${counterPeriod.index}deletePeriod${counterOrganization.index}">Удалить период</button>
                                 <br><br/>
 
 

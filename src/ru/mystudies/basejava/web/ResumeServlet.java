@@ -126,13 +126,10 @@ public class ResumeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+
         String action = request.getParameter("action");
-        if (action != null &&
-                (action.equals(SectionType.EXPERIENCE.name()+"addOrganization") || action.equals(SectionType.EDUCATION.name()+"addOrganization")
-                        || action.matches("\\dadd") || action.matches("\\ddelete")
-                        || action.matches("\\ddeleteOrganizationEXPERIENCE") || action.matches("\\ddeleteOrganizationEDUCATION"))) {
-            tempEdit(request, response, action);
-            return;
+        if (action == null) {
+            action = "";
         }
 
         String uuid = request.getParameter("uuid");
@@ -140,9 +137,8 @@ public class ResumeServlet extends HttpServlet {
 
         List<String> listAchievement = new ArrayList<>();
         List<String> listQualifications = new ArrayList<>();
-
-
         final boolean isCreate = (uuid == null || uuid.length() == 0);
+
         Resume resume;
         if (isCreate) {
             resume = new Resume(fullName);
@@ -193,107 +189,25 @@ public class ResumeServlet extends HttpServlet {
                                 String[] description = request.getParameterValues(i + sectionType.name() + "description");
 
                                 int counter = description != null ? description.length :
-                                        position != null  ? position.length : 0;
-
-                                for (int k = 0; k < counter; k++) {
-                                    if(!HtmlUtil.isEmpty(description[k]) || !HtmlUtil.isEmpty(position[k])){
-                                        periods.add(new Period(DateUtil.fromInt(startPeriod[k].trim()), DateUtil.fromInt(endPeriod[k].trim()),
-                                                position[k] != null ? position[k] : "" , description[k] != null ? description[k] : ""));
-                                    }
-                                }
-                                organizations.add(new Organization(nameOrganization, urls[i], periods));
-                            }
-                        }
-                        resume.setSection(sectionType, new OrganizationSection(organizations));
-                        break;
-                }
-            }
-        }
-        resume.setSection(SectionType.ACHIEVEMENT, new ListSection(listAchievement));
-        resume.setSection(SectionType.QUALIFICATIONS, new ListSection(listQualifications));
-        if (isCreate) {
-            storage.save(resume);
-        } else {
-            storage.update(resume);
-        }
-        response.sendRedirect("resume");
-    }
-
-    protected void tempEdit(HttpServletRequest request, HttpServletResponse response, String action) throws ServletException, IOException {
-
-        String uuid = request.getParameter("uuid");
-        String fullName = request.getParameter("fullName");
-
-        List<String> listAchievement = new ArrayList<>();
-        List<String> listQualifications = new ArrayList<>();
-        Resume resume = new Resume(uuid, fullName);
-
-        for (ContactType contactType : ContactType.values()) {
-            String value = request.getParameter(contactType.name());
-            if (value != null && value.trim().length() != 0) {
-                resume.setContact(contactType, value);
-            } else {
-                resume.getContacts().remove(contactType);
-            }
-        }
-
-        for (SectionType sectionType : SectionType.values()) {
-            String[] value = request.getParameterValues(sectionType.name());
-
-            if (value != null) {
-                switch (sectionType) {
-                    case OBJECTIVE:
-                    case PERSONAL:
-                        if (value[0] != null && value[0].trim().length() != 0) {
-                            resume.setSection(sectionType, new TextSection(value[0]));
-                        } else {
-                            resume.setSection(sectionType, new TextSection(""));
-                        }
-                        break;
-                    case ACHIEVEMENT:
-                        listAchievement.add(value[0]);
-                        break;
-                    case QUALIFICATIONS:
-                        listQualifications.add(value[0]);
-                        break;
-                    case EXPERIENCE:
-                    case EDUCATION:
-                        List<Organization> organizations = new ArrayList<>();
-                        String[] urls = request.getParameterValues(sectionType.name() + "url");
-                        for (int i = 0; i < value.length; i++) {
-                            String nameOrganization = value[i];
-                            if (!HtmlUtil.isEmpty(nameOrganization)) {
-                                List<Period> periods = new ArrayList<>();
-                                String[] position = request.getParameterValues(i + sectionType.name() + "position");
-                                String[] startPeriod = request.getParameterValues(i + sectionType.name() + "startPeriod");
-                                String[] endPeriod = request.getParameterValues(i + sectionType.name() + "endPeriod");
-                                String[] description = request.getParameterValues(i + sectionType.name() + "description");
-
-                                int counter = description != null ? description.length :
                                         position != null ? position.length : 0;
 
-                                if(action.matches(0 + "add")){
-                                    periods.add(0, Period.EMPTY);
-                                    action ="";
-                                }
-
                                 for (int k = 0; k < counter; k++) {
-                                    if(!action.equals(k+"delete") && (!HtmlUtil.isEmpty(description[k]) || !HtmlUtil.isEmpty(position[k]))){
+                                    if (!action.equals(k + "deletePeriod" + i) && (!HtmlUtil.isEmpty(description[k]) || !HtmlUtil.isEmpty(position[k]))) {
                                         periods.add(new Period(DateUtil.fromInt(startPeriod[k].trim()), DateUtil.fromInt(endPeriod[k].trim()),
-                                                position[k] != null ? position[k] : "" , description[k] != null ? description[k] : ""));
-                                    }
-                                    if(action.equals(k+"add")){
-                                        periods.add(0, Period.EMPTY);
+                                                position[k] != null ? position[k] : "", description[k] != null ? description[k] : ""));
                                     }
                                 }
 
-                                if (!action.equals(i+ "deleteOrganizationEXPERIENCE") && sectionType.name().equals("EXPERIENCE")){
-                                    organizations.add(new Organization(nameOrganization, urls[i], periods));
-                                }
-                                if (!action.equals(i+ "deleteOrganizationEDUCATION") && sectionType.name().equals("EDUCATION")){
-                                    organizations.add(new Organization(nameOrganization, urls[i], periods));
+                                if (action.equals(i + "addPeriod")) {
+                                    periods.add(0, Period.EMPTY);
                                 }
 
+                                if (!action.equals(i + "deleteOrganizationEXPERIENCE") && sectionType.name().equals("EXPERIENCE")) {
+                                    organizations.add(new Organization(nameOrganization, urls[i], periods));
+                                }
+                                if (!action.equals(i + "deleteOrganizationEDUCATION") && sectionType.name().equals("EDUCATION")) {
+                                    organizations.add(new Organization(nameOrganization, urls[i], periods));
+                                }
                             }
                         }
 
@@ -311,22 +225,34 @@ public class ResumeServlet extends HttpServlet {
                         break;
                 }
             }
+        }
 
-            if (action.equals(SectionType.EXPERIENCE.name())) {
-                resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(Organization.EMPTY));
-                action = "";
-            }
-            if (action.equals(SectionType.EDUCATION.name())) {
-                resume.setSection(SectionType.EDUCATION, new OrganizationSection(Organization.EMPTY));
-                action = "";
-            }
+        if (action.equals("EXPERIENCEaddOrganization")) {
+            resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(Organization.EMPTY));
+        }
+        if (action.equals("EDUCATIONaddOrganization")) {
+            resume.setSection(SectionType.EDUCATION, new OrganizationSection(Organization.EMPTY));
         }
 
         resume.setSection(SectionType.ACHIEVEMENT, new ListSection(listAchievement));
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(listQualifications));
-        storage.update(resume);
+
+        if (isCreate) {
+            storage.save(resume);
+        } else {
+            storage.update(resume);
+        }
 
         request.setAttribute("resume", resume);
-        request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp").forward(request, response);
+
+        action = request.getParameter("action");
+        if (action != null &&
+                (action.equals("EXPERIENCEaddOrganization") || action.equals("EDUCATIONaddOrganization")
+                        || action.matches(".*addPeriod.*") || action.matches(".*deletePeriod.*")
+                        || action.matches(".*deleteOrganizationEXPERIENCE.*") || action.matches(".*deleteOrganizationEDUCATION.*"))) {
+            request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("resume");
+        }
     }
 }

@@ -13,7 +13,7 @@ public class Organization implements Serializable {
     private String website;
     private List<Period> periods;
 
-    public static final Organization EMPTY = new Organization("", "", Period.EMPTY);
+    public static final Organization EMPTY = new Organization("nonameOrganization", "", Period.EMPTY);
 
     public Organization() {
     }
