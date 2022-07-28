@@ -96,8 +96,6 @@
     <br/>
     <button onclick="window.history.back()">ОК</button>
 </section>
-
-<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
 

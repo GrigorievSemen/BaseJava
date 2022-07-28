@@ -26,12 +26,12 @@ public class TestData {
         RESUME_4.setContact(ContactType.SKYPE, "Skype");
 
         RESUME_1.setContact(ContactType.NUMBER_PHONE, "1111111111");
-        RESUME_1.setContact(ContactType.SKYPE, "qwerty1");
-        RESUME_1.setContact(ContactType.EMAIL, "mail1");
-        RESUME_1.setContact(ContactType.PROFILE_LINKEDIN, "LinkedIn1");
-        RESUME_1.setContact(ContactType.PROFILE_GITHUB, "GitHub1");
-        RESUME_1.setContact(ContactType.PROFILE_STACKOVERFLOW, "Stackoverflow1");
-        RESUME_1.setContact(ContactType.HOME_PAGE, "Home1");
+        RESUME_1.setContact(ContactType.SKYPE, "https://yandex.ru");
+        RESUME_1.setContact(ContactType.EMAIL, "https://yandex.ru");
+        RESUME_1.setContact(ContactType.PROFILE_LINKEDIN, "https://yandex.ru");
+        RESUME_1.setContact(ContactType.PROFILE_GITHUB, "https://yandex.ru");
+        RESUME_1.setContact(ContactType.PROFILE_STACKOVERFLOW, "https://yandex.ru");
+        RESUME_1.setContact(ContactType.HOME_PAGE, "https://yandex.ru");
 
         RESUME_1.setSection(SectionType.OBJECTIVE, new TextSection("Позиция_1"));
         RESUME_1.setSection(SectionType.PERSONAL, new TextSection("Личные качества_1"));

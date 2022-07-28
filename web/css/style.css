@@ -1,50 +1,72 @@
-section {
-    width: 900px;
+
+body {
+    background: url(../img/phon.jpg)no-repeat;
+    background-size: 100% 100%;
+}
+
+section{
+    width: 500px;
     margin: auto;
 }
-
-div.title {
-    float: left;
-    font-size: large;
-    margin-right: 50px;
-    color: blueviolet;
-    background: rgba(210, 226, 226, 0.51);
+.table-scroll table {
+    width:100%;
+    table-layout: fixed;
+    border: none;
 }
 
-div.period {
-    float: left;
-    line-height: 40px;
-    font-size: small;
-    margin-right: 50px;
-    color: black;
+.table-scroll-body {
+    height: 247px;
+    overflow-x: auto;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
 }
 
-div.position {
-    line-height: 40px;
-    font-weight: bolder;
-    font-size: medium;
-    color: darkslateblue;
+.table-scroll thead th {
+    font-weight: bold;
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    background: #CBC6C2;
+    font-size: 14px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+.table-scroll tbody td {
+    text-align: left;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 10px 15px;
+    font-size: 14px;
+    vertical-align: top;
+}
+.table-scroll tbody tr:nth-child(even){
+    background: #ECECEC;
 }
 
-div.description {
-    color: black;
-    margin-left: 120px;
+.table-scroll tbody tr:nth-child(odd){
+    background: #DBD4CE;
 }
+
+/* Стили для скролла */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+
+
 
 header {
     background: none repeat scroll 0 0 #A6C9E2;
     color: #2E6E9E;
     font-size: 20px;
     padding: 5px 20px;
-    text-align: center;
-}
-
-footer {
-    background: none repeat scroll 0 0 #A6C9E2;
-    color: #2E6E9E;
-    font-size: 20px;
-    padding: 5px 20px;
-    margin: 20px 0;
     text-align: center;
 }
 
@@ -75,25 +97,30 @@ li {
 
 a[href^="skype:"] {
     padding-left: 20px !important;
-    background: url(../img/skype.png) no-repeat center left;
+    background-image: url(../img/skype.png);
+    background-repeat: no-repeat;
 }
 
 a[href^="mailto:"] {
     padding-left: 20px !important;
-    background: url(../img/email.png) no-repeat center left;
+    background-image: url(../img/email.png);
+    background-repeat: no-repeat;
 }
 
 a[href^="https://stackoverflow.com"] {
     padding-left: 20px !important;
-    background: url(../img/so.png) no-repeat center left;
+    background-image: url(../img/so.png);
+    background-repeat: no-repeat;
 }
 
 a[href^="https://www.linkedin.com"] {
     padding-left: 20px !important;
-    background: url(../img/lin.png) no-repeat center left;
+    background-image: url(../img/lin.png);
+    background-repeat: no-repeat;
 }
 
 a[href*="github."] {
     padding-left: 20px !important;
-    background: url(../img/gh.png) no-repeat center left;
+    background-image: url(../img/gh.png);
+    background-repeat: no-repeat;
 }
