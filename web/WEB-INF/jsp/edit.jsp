@@ -47,7 +47,7 @@
                 <c:when test="${type.equals(objective) || type.equals(personal) ||
              type.equals(achievement) || type.equals(qualifications)}">
                     <dl>
-                        <dt>${type.title}</dt>
+                        <dt><h3>${type.title}</h3></dt>
                         <c:set var="text"
                                value="<%=HtmlUtil.sectionDataToString(type,resume)%>"/>
 
@@ -65,18 +65,22 @@
 
                 <c:when test="${type.equals(experiense) || type.equals(education)}">
                     <c:set var="listOrganization" value="<%=HtmlUtil.organizationsList(type,resume)%>"/>
-        <dl>
-            <dt>${type.title}</dt>
-        </dl>
+                    <hr>
+                    <dl>
+                        <dt><h3>${type.title}</h3></dt>
+                    </dl>
                     <button type="submit" formaction="resume?&action=${type.name()}addOrganization">Добавить</button>
 
                     <c:forEach var="organization" items="${listOrganization}" varStatus="counterOrganization">
 
-                        <button type="submit" formaction="resume?&action=${counterOrganization.index}deleteOrganization${type.name()}">Удалить учреждение</button>
+                        <button type="submit"
+                                formaction="resume?&action=${counterOrganization.index}deleteOrganization${type.name()}">
+                            Удалить учреждение
+                        </button>
 
                         <dl>
-                            <dt>Название учреждения:</dt>
-                            <dd><input type="text" placeholder="Название места"  name='${type.name()}' size=100
+                            <dt class="name_institution">Название учреждения:</dt>
+                            <dd><input type="text" placeholder="Название места" name='${type.name()}' size=100
                                        required
                                        title="Поле должно быть заполнено"
                                        value="${organization.getTitle()}"></dd>
@@ -90,13 +94,17 @@
                         </dl>
                         <div style="margin-left: 30px">
 
-                            <button type="submit" formaction="resume?&action=${counterOrganization.index}addPeriod">Добавить период</button><br><br/>
+                            <button type="submit"
+                                    formaction="resume?&action=${counterOrganization.index}addPeriod${type.name()}">
+                                Добавить период
+                            </button>
                             <c:forEach var="period" items="${organization.getPeriods()}" varStatus="counterPeriod">
                                 <jsp:useBean id="period" type="ru.mystudies.basejava.model.Period"/>
                                 <dl>
                                     <dt>Начальная дата:</dt>
                                     <dd>
-                                        <input type="text" name="${counterOrganization.index}${type.name()}startPeriod" size=10
+                                        <input type="text" name="${counterOrganization.index}${type.name()}startPeriod"
+                                               size=10
                                                value="${HtmlUtil.getPeriodStart(period)}"
                                                placeholder="YYYY-MM"
                                                pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1}))|[ ]*"
@@ -106,7 +114,8 @@
                                 <dl>
                                     <dt>Конечная дата:</dt>
                                     <dd>
-                                        <input type="text" name="${counterOrganization.index}${type.name()}endPeriod" size=10
+                                        <input type="text" name="${counterOrganization.index}${type.name()}endPeriod"
+                                               size=10
                                                value="${HtmlUtil.getPeriodEnd(period)}"
                                                placeholder="YYYY-MM"
                                                pattern="((19[0-9]{2}|20[0-9]{2})-(0[1-9]{1}|1[012]{1}))|[ ]*"
@@ -114,20 +123,26 @@
                                 </dl>
                                 <dl>
                                     <dt>Должность:</dt>
-                                    <dd><input type="text" name="${counterOrganization.index}${type.name()}position" size=75
+                                    <dd><input type="text" name="${counterOrganization.index}${type.name()}position"
+                                               size=75
                                                value="${period.getPosition()}" placeholder="Занимаемая должность">
                                 </dl>
                                 <dl>
                                     <dt>Описание:</dt>
                                     <dd><textarea name="${counterOrganization.index}${type.name()}description" rows=5
-                                                  cols=75 placeholder="Описание" >${period.getDescription()}</textarea>
+                                                  cols=75 placeholder="Описание">${period.getDescription()}</textarea>
                                     </dd>
                                 </dl>
-                                <button type="submit" formaction="resume?&action=${counterPeriod.index}deletePeriod${counterOrganization.index}">Удалить период</button>
+                                <button type="submit"
+                                        formaction="resume?&action=${counterOrganization.index}deletePeriod${type.name()}${counterPeriod.index}">
+                                    Удалить период
+                                </button>
+                                <br><br/>
+                                <hr>
                                 <br><br/>
 
 
-                            </c:forEach>
+                            </c:forEach><br><br/>
                         </div>
                     </c:forEach>
 

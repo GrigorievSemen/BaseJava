@@ -192,13 +192,15 @@ public class ResumeServlet extends HttpServlet {
                                         position != null ? position.length : 0;
 
                                 for (int k = 0; k < counter; k++) {
-                                    if (!action.equals(k + "deletePeriod" + i) && (!HtmlUtil.isEmpty(description[k]) || !HtmlUtil.isEmpty(position[k]))) {
+                                    System.out.println(action);
+                                    if (action.hashCode() != (i+"deletePeriod" + sectionType.name()+k).hashCode()
+                                            && (!HtmlUtil.isEmpty(description[k]) || !HtmlUtil.isEmpty(position[k]))) {
                                         periods.add(new Period(DateUtil.fromInt(startPeriod[k].trim()), DateUtil.fromInt(endPeriod[k].trim()),
                                                 position[k] != null ? position[k] : "", description[k] != null ? description[k] : ""));
                                     }
                                 }
 
-                                if (action.equals(i + "addPeriod")) {
+                                if (action.hashCode() == (i + "addPeriod"+sectionType.name()).hashCode()) {
                                     periods.add(0, Period.EMPTY);
                                 }
 

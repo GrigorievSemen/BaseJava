@@ -1,21 +1,26 @@
 
 body {
-    background: url(../img/phon.jpg)no-repeat;
-    background-size: 100% 100%;
+    background: url(../img/phon.jpg) center center  no-repeat fixed;
+    background-size: cover;
+
 }
 
 section{
-    width: 500px;
+    width:50%;
     margin: auto;
 }
 .table-scroll table {
-    width:100%;
+    width: 100%;
     table-layout: fixed;
-    border: none;
+    border: outset 8px;
+}
+
+.table-scroll thead{
+    overflow-x: scroll;
 }
 
 .table-scroll-body {
-    height: 247px;
+    height: 400px;
     overflow-x: auto;
     margin-top: 0px;
     margin-bottom: 20px;
@@ -23,23 +28,21 @@ section{
 }
 
 .table-scroll thead th {
-    font-weight: bold;
-    text-align: left;
-    border: none;
+    text-align: center;
     padding: 10px 15px;
     background: #CBC6C2;
-    font-size: 14px;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    font-size: 18px;
 }
 .table-scroll tbody td {
-    text-align: left;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
     padding: 10px 15px;
     font-size: 14px;
     vertical-align: top;
+    word-break: break-all;
 }
+.for_delete\/edit {
+    width: 5%;
+}
+
 .table-scroll tbody tr:nth-child(even){
     background: #ECECEC;
 }
@@ -53,17 +56,13 @@ section{
     width: 6px;
 }
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgb(208, 205, 200);
 }
 ::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgb(89, 85, 60);
 }
 
-
-
-
 header {
-    background: none repeat scroll 0 0 #A6C9E2;
     color: #2E6E9E;
     font-size: 20px;
     padding: 5px 20px;
@@ -71,7 +70,6 @@ header {
 }
 
 dl {
-    background: none repeat scroll 0 0 #FAFAFA;
     margin: 8px 0;
     padding: 0;
 }
@@ -79,6 +77,11 @@ dl {
 dt {
     display: inline-block;
     width: 170px;
+}
+.name_institution{
+    display: inline-block;
+    width: 170px;
+    font-weight: bold;
 }
 
 dd {
