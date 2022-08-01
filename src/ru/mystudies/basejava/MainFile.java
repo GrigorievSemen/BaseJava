@@ -2,7 +2,7 @@ package ru.mystudies.basejava;
 
 import java.io.File;
 import java.util.Objects;
-
+//for test
 public class MainFile {
     public static void main(String[] args) throws Exception {
         File file = new File("HW/src/ru/mystudies/basejava");

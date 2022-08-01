@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-
+//for test
 public class MainArray {
     private final static Storage ARRAY_STORAGE = new ArrayStorage();
 

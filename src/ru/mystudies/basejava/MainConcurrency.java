@@ -6,7 +6,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
+//for test
 public class MainConcurrency {
     public static final int THREADS_NUMBER = 10000;
     //    private static final Object LOCK = new Object();

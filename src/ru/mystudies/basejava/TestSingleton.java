@@ -1,7 +1,7 @@
 package ru.mystudies.basejava;
 
 import ru.mystudies.basejava.model.SectionType;
-
+//for test
 public class TestSingleton {
     private static TestSingleton instance;
 

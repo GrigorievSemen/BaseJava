@@ -5,6 +5,10 @@ body {
 
 }
 
+.linkAddResume{
+    padding: 200px;
+}
+
 section{
     width:50%;
     margin: auto;

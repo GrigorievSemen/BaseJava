@@ -10,7 +10,7 @@
 </head>
 <body>
 <jsp:include page="fragments/header.jsp"/>
-<a href='resume?&action=add'>Добавить запись<img src="img/add.png"></a><br></br>
+<a class="linkAddResume" href='resume?&action=add'>Добавить запись<img src="img/add.png"></a><br></br>
 <section>
 
     <div class="table-scroll">

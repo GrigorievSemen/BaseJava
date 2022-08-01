@@ -4,7 +4,7 @@ import ru.mystudies.basejava.model.Resume;
 import ru.mystudies.basejava.storage.ArrayStorage;
 
 import java.io.IOException;
-
+//for test
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
     // static final MapStorage MAP_STORAGE = new MapStorage();

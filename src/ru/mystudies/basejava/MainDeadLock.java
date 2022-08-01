@@ -1,5 +1,5 @@
 package ru.mystudies.basejava;
-
+//for test
 public class MainDeadLock {
     public static final String Lock_1 = "Lock_1";
     public static final String Lock_2 = "Lock_2";

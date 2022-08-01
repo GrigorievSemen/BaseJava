@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+//for test
 public class MainCollections {
     private static final String UUID_1 = "uuid1";
     private static final String FULL_NAME_1 = "Петров Петр Петрович";

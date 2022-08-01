@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toList;
-
+//for test
 public class MainStreams {
     public static void main(String[] args) throws IOException {
         System.out.println(minValue(new int[]{1, 2, 3, 3, 2, 3})); //123

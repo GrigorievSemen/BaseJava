@@ -4,7 +4,7 @@ import ru.mystudies.basejava.model.*;
 
 import java.util.Arrays;
 import java.util.List;
-
+//for test
 public class ResumeTestData {
 
     public static Resume createAndReturnResume(String uuid, String fullName) {
