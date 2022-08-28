@@ -3,7 +3,7 @@
 Основная часть была разработана в ходе прохождения учебного курса по основам веб разработки.
 Далее было существенно переработана логика по возможности добавления новых полей.
 * Использовалось при разработке, сервлеты, Collection Framework, Stream API, web-контайнер Tomcat, HTML, JUnit, JSTL, JSP. 
-* Ссылка на Heroku - https://semappresume.herokuapp.com/resume
+* Ссылка на Heroku - https://gsmresumes.herokuapp.com/resume
 
 Для работы необходимо:
 * Установленный Tomcat
